@@ -1,6 +1,12 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>CareeFit</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
 <style>
 /* Layout: 고정 내비 → 히어로(마우스 틸트 폰) → 스크롤 문장 → 스티키 4단계 스토리 → 성향 비교(타임라인 드래그) → 기능 벤토(틸트 카드) → 드래그 갤러리 → 피키 CTA */
 @font-face{font-family:'Pretendard';font-weight:400;font-display:swap;src:url(pretendard-400.woff2) format('woff2')}
@@ -242,6 +248,11 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.12)}
 .gallery{padding-block:clamp(80px,10vw,130px) clamp(90px,12vw,150px);background:var(--bg-alt);overflow:hidden}
 .gallery .row{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
 .gallery .hint{font-size:14px;color:var(--ink-3);font-weight:600}
+.gal-title{display:flex;align-items:center;flex-wrap:wrap;gap:.12em}
+.gal-title img{height:1.05em;width:auto}
+.gal-title .logo-d{display:none}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .gal-title .logo-l{display:none}:root:not([data-theme="light"]) .gal-title .logo-d{display:block}}
+:root[data-theme="dark"] .gal-title .logo-l{display:none}:root[data-theme="dark"] .gal-title .logo-d{display:block}
 .strip{margin-top:44px;display:flex;gap:22px;overflow-x:auto;scrollbar-width:none;padding-block:10px 30px;cursor:grab;user-select:none;-webkit-user-select:none;padding-left:max(20px,calc((100vw - 1160px)/2));padding-right:max(20px,calc((100vw - 1160px)/2));scroll-padding-left:max(20px,calc((100vw - 1160px)/2))}
 .strip::-webkit-scrollbar{display:none}
 .strip.drag{cursor:grabbing}
@@ -251,9 +262,6 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.12)}
 .strip figcaption{margin-top:16px;font-size:15px;font-weight:700;letter-spacing:-.02em}
 .strip figcaption span{display:block;font-size:13px;font-weight:500;color:var(--ink-3)}
 .strip img{-webkit-user-drag:none;user-select:none}
-.cursor{position:fixed;left:0;top:0;width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-size:14px;font-weight:700;pointer-events:none;z-index:70;transform:scale(0);transition:transform .25s cubic-bezier(.3,1.4,.5,1);will-change:transform}
-.cursor.show{transform:scale(1)}
-.cursor.down{transform:scale(.82)}
 
 /* cta */
 .cta{padding-block:clamp(100px,14vw,170px) clamp(80px,10vw,120px);text-align:center;overflow:hidden}
@@ -285,6 +293,8 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
   .js .reveal.pre{opacity:1;transform:none}
 }
 </style>
+</head>
+<body>
 
 <header class="nav gutter" id="nav">
   <div class="container">
@@ -453,7 +463,7 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
   <section class="gallery" id="screens">
     <div class="container gutter">
       <div class="row reveal pre">
-        <div><span class="eyebrow">화면 둘러보기</span><h2 class="h2">CareeFit의 모든 화면</h2></div>
+        <div><span class="eyebrow">화면 둘러보기</span><h2 class="h2 gal-title"><img class="logo-l" src="logo-lg.png" alt="CareeFit" width="647" height="150"><img class="logo-d" src="logo-lg-dark.png" alt="CareeFit" width="647" height="150"><span>의 모든 화면</span></h2></div>
         <p class="hint">좌우로 끌어서 넘겨 보세요</p>
       </div>
     </div>
@@ -500,7 +510,6 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
   <div class="container"><span>© 2026 CareeFit</span><span>앱 화면은 현재 프로토타입에서 캡처했어요.</span></div>
 </footer>
 
-<div class="cursor" id="cursor" aria-hidden="true">드래그</div>
 
 <script>
 (function () {
@@ -675,17 +684,16 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
     c.addEventListener('mouseleave', function () { c.style.transition = ''; c.style.transform = ''; });
   });
 
-  /* gallery drag with inertia + custom cursor */
-  var strip = document.getElementById('strip'), cursor = document.getElementById('cursor');
+  /* gallery drag with inertia */
+  var strip = document.getElementById('strip');
   var down = false, startX = 0, startL = 0, lastX = 0, lastT = 0, vel = 0, moved = 0, fling = null;
   function stopFling() { if (fling) cancelAnimationFrame(fling); fling = null; }
   strip.addEventListener('pointerdown', function (e) {
     if (e.pointerType !== 'mouse') return;
     stopFling(); down = true; moved = 0; startX = lastX = e.clientX; startL = strip.scrollLeft; lastT = performance.now(); vel = 0;
-    cursor.classList.add('down'); e.preventDefault();
+    e.preventDefault();
   });
   addEventListener('pointermove', function (e) {
-    if (fine) { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; }
     if (!down) return;
     var dx = e.clientX - startX; moved = Math.max(moved, Math.abs(dx));
     if (moved > 4) strip.classList.add('drag');
@@ -693,15 +701,11 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
     var t = performance.now(); vel = (e.clientX - lastX) / Math.max(1, t - lastT); lastX = e.clientX; lastT = t;
   });
   addEventListener('pointerup', function () {
-    if (!down) return; down = false; strip.classList.remove('drag'); cursor.classList.remove('down');
+    if (!down) return; down = false; strip.classList.remove('drag');
     if (reduce) return;
     var v = vel * 16;
     (function step() { if (Math.abs(v) < 0.4) { fling = null; return; } strip.scrollLeft -= v; v *= 0.94; fling = requestAnimationFrame(step); })();
   });
-  if (fine) {
-    strip.addEventListener('mouseenter', function () { cursor.classList.add('show'); });
-    strip.addEventListener('mouseleave', function () { cursor.classList.remove('show'); });
-  }
   strip.addEventListener('keydown', function (e) {
     if (e.key === 'ArrowRight') { strip.scrollBy({ left: 240, behavior: reduce ? 'auto' : 'smooth' }); e.preventDefault(); }
     if (e.key === 'ArrowLeft') { strip.scrollBy({ left: -240, behavior: reduce ? 'auto' : 'smooth' }); e.preventDefault(); }
@@ -734,4 +738,5 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
 })();
 </script>
 
-</body></html>
+</body>
+</html>
