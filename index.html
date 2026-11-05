@@ -1,0 +1,737 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>CareeFit</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: 고정 내비 → 히어로(마우스 틸트 폰) → 스크롤 문장 → 스티키 4단계 스토리 → 성향 비교(타임라인 드래그) → 기능 벤토(틸트 카드) → 드래그 갤러리 → 피키 CTA */
+@font-face{font-family:'Pretendard';font-weight:400;font-display:swap;src:url(fonts/pretendard-400.woff2) format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:500;font-display:swap;src:url(fonts/pretendard-500.woff2) format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:600;font-display:swap;src:url(fonts/pretendard-600.woff2) format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:700;font-display:swap;src:url(fonts/pretendard-700.woff2) format('woff2')}
+:root{
+  --bg:#ffffff; --bg-alt:#f3f6fa; --card:#ffffff; --line:#e5e8eb;
+  --ink:#191f28; --ink-2:#4e5968; --ink-3:#8b95a1;
+  --brand:#1494fe; --brand-strong:#0a78dc; --brand-soft:#e8f4ff; --on-brand:#ffffff;
+  --fit:#ff9400; --fit-soft:#fff3e0;
+  --bezel:#121a24; --shadow:0 30px 60px -20px rgba(20,60,110,.28),0 12px 24px -12px rgba(20,60,110,.18);
+  --sans:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',system-ui,sans-serif;
+  --r-lg:28px; --r-md:18px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e1319; --bg-alt:#151c25; --card:#19222d; --line:#28323e;
+  --ink:#f2f4f6; --ink-2:#b0b8c1; --ink-3:#6b7684;
+  --brand:#3ea2ff; --brand-strong:#6bb8ff; --brand-soft:#132f4b; --on-brand:#06121e;
+  --fit:#ffa933; --fit-soft:#3a2a13; --bezel:#04070b;
+  --shadow:0 30px 60px -20px rgba(0,0,0,.6),0 12px 24px -12px rgba(0,0,0,.5); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e1319; --bg-alt:#151c25; --card:#19222d; --line:#28323e;
+  --ink:#f2f4f6; --ink-2:#b0b8c1; --ink-3:#6b7684;
+  --brand:#3ea2ff; --brand-strong:#6bb8ff; --brand-soft:#132f4b; --on-brand:#06121e;
+  --fit:#ffa933; --fit-soft:#3a2a13; --bezel:#04070b;
+  --shadow:0 30px 60px -20px rgba(0,0,0,.6),0 12px 24px -12px rgba(0,0,0,.5); color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;letter-spacing:-.01em;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+h1,h2,h3,p{margin:0}
+h1,h2,h3{text-wrap:balance;letter-spacing:-.035em;line-height:1.22}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+:focus-visible{outline:2.5px solid var(--brand);outline-offset:3px;border-radius:8px}
+.gutter{padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.container{max-width:1160px;margin:0 auto}
+.eyebrow{display:inline-block;font-size:15px;font-weight:700;color:var(--brand);margin-bottom:14px;letter-spacing:-.01em}
+.h2{font-size:clamp(30px,4.4vw,50px);font-weight:700}
+.lead{font-size:clamp(17px,1.6vw,20px);color:var(--ink-2);margin-top:18px;max-width:34em}
+section{position:relative}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;transition:background .3s,box-shadow .3s}
+.nav.scrolled{background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:saturate(1.6) blur(14px);-webkit-backdrop-filter:saturate(1.6) blur(14px);box-shadow:0 1px 0 var(--line)}
+.nav .container{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.brand{display:flex;align-items:center;gap:8px;text-decoration:none;font-weight:700;font-size:20px;letter-spacing:-.02em}
+.brand img{width:auto;height:28px}
+.brand .logo-d{display:none}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .brand .logo-l{display:none}:root:not([data-theme="light"]) .brand .logo-d{display:block}}
+:root[data-theme="dark"] .brand .logo-l{display:none}:root[data-theme="dark"] .brand .logo-d{display:block}
+.brand b{color:var(--fit)}
+.nav-links{display:flex;gap:6px;align-items:center}
+.nav-links a.l{text-decoration:none;color:var(--ink-2);font-size:15px;font-weight:600;padding:8px 12px;border-radius:10px;transition:background .2s,color .2s}
+.nav-links a.l:hover{background:var(--bg-alt);color:var(--ink)}
+@media (max-width:760px){.nav-links a.l{display:none}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;cursor:pointer;font-family:inherit;font-weight:700;text-decoration:none;border-radius:16px;transition:background .2s,transform .2s}
+.btn-primary{background:var(--brand);color:var(--on-brand);font-size:17px;padding:16px 26px}
+.btn-primary:hover{background:var(--brand-strong)}
+.btn-sm{font-size:14px;padding:10px 16px;border-radius:12px}
+.btn-ghost{background:var(--bg-alt);color:var(--ink);font-size:17px;padding:16px 24px}
+.btn-ghost:hover{background:var(--line)}
+.magnetic{will-change:transform}
+.magnetic>span{display:inline-block;transition:transform .2s}
+
+/* phone: 한 기종(402×874 화면 · 다이내믹 아일랜드)으로 통일, 크기는 cqw로 비례 */
+.phone{display:block;position:relative;width:100%;container-type:inline-size;padding:0}
+.phone::before{content:"";position:absolute;inset:0;border-radius:15cqw;background:var(--bezel);box-shadow:var(--shadow),inset 0 0 0 .6cqw #2a3644}
+.phone .scr{display:block;position:relative;z-index:1;width:auto;margin:3.4cqw;aspect-ratio:600/1305;border-radius:11.6cqw;overflow:hidden;background:#fdfdfd}
+.phone .scr img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+.phone .isl{position:absolute;z-index:3;left:50%;top:6.2cqw;transform:translateX(-50%);width:29cqw;height:8.4cqw;border-radius:5cqw;background:#05080c}
+.phone .sb{position:absolute;z-index:2;left:3.4cqw;right:3.4cqw;top:3.4cqw;height:13cqw;display:flex;align-items:center;justify-content:space-between;padding:0 8.5cqw 0 10.5cqw;color:#111;font:600 4.1cqw/1 var(--sans);letter-spacing:0;pointer-events:none}
+.phone .sb svg{height:3.3cqw;width:auto;display:block}
+.phone .sb .ic{display:flex;gap:1.4cqw;align-items:center}
+.phone .home{position:absolute;z-index:2;left:50%;bottom:4.8cqw;transform:translateX(-50%);width:34cqw;height:1.3cqw;border-radius:1cqw;background:#111;opacity:.85}
+
+/* hero */
+.hero{padding-block:clamp(36px,6vw,80px) clamp(60px,8vw,120px);overflow:hidden}
+.hero .spot{position:absolute;inset:0;pointer-events:none;background:radial-gradient(520px circle at var(--mx,70%) var(--my,40%),color-mix(in srgb,var(--brand) 16%,transparent),transparent 70%);transition:opacity .4s}
+.hero .container{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;position:relative}
+.hero h1{font-size:clamp(44px,7.2vw,88px);font-weight:700;letter-spacing:-.045em;line-height:1.12}
+.hero h1 .fit{color:var(--brand)}
+.hero .lead{margin-top:24px}
+.hero .ctas{display:flex;gap:10px;flex-wrap:wrap;margin-top:36px}
+.hero-stage{position:relative;height:clamp(520px,58vw,680px);perspective:1100px}
+.hero-phone{position:absolute;left:50%;top:50%;width:min(290px,60vw);transform:translate(-50%,-50%);transform-style:preserve-3d}
+/* 3D 본체: 같은 모양의 판을 겹쳐 두께(옆·위·아래 면)를 만들고, 화면은 맨 앞 판에 올림 */
+.hero-phone .phone{transform:translateZ(1px);backface-visibility:hidden}
+.hero-phone .phone::before{box-shadow:inset 0 0 0 .6cqw #2a3644}
+.hero-phone .slab{position:absolute;inset:0;border-radius:15%/7.15%;pointer-events:none}
+.hero-phone .slab.back{background:linear-gradient(160deg,#2b3644,#151c25 60%,#0b1016)}
+.hero-phone .btns{position:absolute;inset:0;pointer-events:none;transform-style:preserve-3d}
+.hero-phone .btns i{position:absolute;width:4px;border-radius:2px;background:linear-gradient(90deg,#7f8a98,#c3cad3)}
+.hero-phone .sglare{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.38) 48%,transparent 62%);background-size:260% 100%;background-position:var(--gl,50%) 0;mix-blend-mode:screen}
+.ground{position:absolute;left:50%;bottom:3%;width:min(240px,50vw);height:40px;margin-left:calc(min(240px,50vw)/-2);border-radius:50%;background:radial-gradient(closest-side,rgba(10,40,80,.32),transparent);filter:blur(6px);pointer-events:none;will-change:transform}
+.float{position:absolute;background:var(--card);border-radius:18px;box-shadow:var(--shadow);padding:14px 16px;font-size:14px;line-height:1.4;will-change:transform;border:1px solid var(--line)}
+.float .k{font-size:12px;color:var(--ink-3);font-weight:600}
+.float .v{font-weight:700;font-size:16px}
+.f1{left:-2%;top:16%}
+.f2{right:-1%;top:34%}
+.f3{left:2%;bottom:14%}
+.f4{right:6%;bottom:4%;padding:0;background:none;box-shadow:none;border:0}
+.f4 img{width:96px}
+.dpill{display:inline-block;background:var(--brand);color:#fff;border-radius:8px;padding:2px 8px;font-weight:700;font-size:13px;margin-bottom:6px}
+.ring{display:flex;align-items:center;gap:10px}
+.ring svg{flex:none}
+@media (max-width:900px){
+  .hero .container{grid-template-columns:1fr;text-align:left}
+  .hero-stage{height:560px}
+  .f1{left:0}.f2{right:0}
+}
+@media (max-width:480px){.float{font-size:12px;padding:10px 12px}.float .v{font-size:14px}.f4 img{width:70px}}
+
+/* statement */
+.statement{padding-block:clamp(90px,14vw,180px);background:var(--bg-alt)}
+.statement p{font-size:clamp(28px,4.6vw,56px);font-weight:700;letter-spacing:-.04em;line-height:1.35;max-width:18em}
+.statement .w{color:var(--ink-3);opacity:.35;transition:opacity .25s,color .25s}
+.statement .w.on{opacity:1;color:var(--ink)}
+.statement .w.hl.on{color:var(--brand)}
+
+/* story */
+.story{height:400vh;background:var(--bg)}
+.story-inner{position:sticky;top:0;height:100vh;display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center}
+.story-head{margin-bottom:36px}
+.steps{display:flex;flex-direction:column;gap:6px;list-style:none;margin:0;padding:0}
+.step{display:block;width:100%;text-align:left;background:none;border:0;font-family:inherit;color:inherit;cursor:pointer;padding:16px 18px 16px 22px;border-radius:16px;position:relative;transition:background .25s}
+.step:hover{background:var(--bg-alt)}
+.step::before{content:"";position:absolute;left:0;top:16px;bottom:16px;width:3px;border-radius:3px;background:var(--line)}
+.step .bar{position:absolute;left:0;top:16px;width:3px;border-radius:3px;background:var(--brand);height:0}
+.step .t{display:block;font-size:20px;font-weight:700;color:var(--ink-3);transition:color .25s;letter-spacing:-.03em}
+.step .d{display:block;font-size:15.5px;color:var(--ink-2);max-height:0;overflow:hidden;opacity:0;transition:max-height .45s ease,opacity .35s ease,margin .35s;margin-top:0}
+.step.on .t{color:var(--ink)}
+.step.on .d{max-height:120px;opacity:1;margin-top:6px}
+.step .no{font-size:13px;font-weight:700;color:var(--brand);margin-right:8px}
+.story-stage{display:flex;justify-content:center}
+.story-stage .phone{width:min(320px,37vh)}
+.story-stage .scr img{opacity:0;transform:scale(1.03);transition:opacity .5s ease,transform .6s ease}
+.story-stage .scr img.on{opacity:1;transform:none}
+.step .m-shot{display:none}
+@media (max-width:900px){
+  .story{height:auto;padding-block:90px}
+  .story-inner{position:static;height:auto;grid-template-columns:1fr}
+  .story-stage{display:none}
+  .step{cursor:default;padding:0 0 40px 0}
+  .step::before,.step .bar{display:none}
+  .step .t{color:var(--ink)}
+  .step .d{max-height:none;opacity:1;margin-top:6px}
+  .step .m-shot{display:block;margin-top:24px;width:min(260px,68vw)}
+}
+
+/* persona */
+.persona{padding-block:clamp(90px,12vw,150px);background:var(--bg-alt)}
+.persona-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;margin-top:48px}
+.pick{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.pcard{position:relative;text-align:left;font-family:inherit;color:inherit;cursor:pointer;background:var(--card);border:2px solid transparent;border-radius:var(--r-md);padding:20px 20px 20px 20px;display:flex;gap:14px;align-items:center;transition:border-color .25s,transform .25s,box-shadow .25s}
+.pcard:hover{transform:translateY(-3px);box-shadow:0 14px 30px -18px rgba(20,60,110,.35)}
+.pcard img{width:64px;height:auto;flex:none;transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.pcard:hover img{transform:rotate(-6deg) scale(1.08)}
+.pcard .t{display:block;font-size:20px;font-weight:700;letter-spacing:-.03em}
+.pcard .d{display:block;font-size:14px;color:var(--ink-2);line-height:1.45;margin-top:2px}
+.pcard[aria-pressed="true"]{border-color:var(--brand)}
+.pcard.eff[aria-pressed="true"]{border-color:var(--fit)}
+.timeline{margin-top:20px;background:var(--card);border-radius:var(--r-lg);padding:28px 28px 26px;border:1px solid var(--line)}
+.tl-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.tl-head b{font-size:18px;letter-spacing:-.03em}
+.tl-head span{font-size:13px;color:var(--ink-3)}
+.track{position:relative;height:150px;margin:20px 8px 8px}
+.track .rail{position:absolute;left:0;right:0;top:75px;height:4px;border-radius:4px;background:var(--line)}
+.track .fill{position:absolute;top:75px;height:4px;border-radius:4px;background:var(--acc,var(--brand));transition:left .5s cubic-bezier(.2,.8,.2,1),width .5s cubic-bezier(.2,.8,.2,1),background .3s}
+.ms{position:absolute;top:69px;transform:translateX(-50%);transition:left .5s cubic-bezier(.2,.8,.2,1)}
+.ms i{display:block;width:16px;height:16px;border-radius:50%;background:var(--card);border:3.5px solid var(--acc,var(--brand));transition:border-color .3s}
+.ms .lab{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;text-align:center;font-size:13px;line-height:1.3;color:var(--ink-2)}
+.ms .lab b{display:block;font-size:13px;color:var(--acc,var(--brand));transition:color .3s}
+.ms.up .lab{bottom:28px}
+.ms.dn .lab{top:28px}
+.ms.goal i{width:22px;height:22px;margin:-3px;background:var(--acc,var(--brand))}
+.ms.goal .lab b{color:var(--ink)}
+.end{position:absolute;right:-8px;top:62px;font-size:12px;font-weight:700;color:var(--ink-3);text-align:right}
+.end::before{content:"";display:block;width:2px;height:30px;background:var(--ink-3);margin:0 0 0 auto;opacity:.5}
+.buffer{display:flex;align-items:center;gap:16px;margin-top:22px;flex-wrap:wrap}
+.buffer label{font-size:15px;font-weight:700;white-space:nowrap}
+.buffer output{font-size:15px;font-weight:700;color:var(--acc,var(--brand));min-width:76px}
+input[type=range]{flex:1;min-width:160px;-webkit-appearance:none;appearance:none;height:28px;background:transparent;cursor:grab}
+input[type=range]:active{cursor:grabbing}
+input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:6px;background:linear-gradient(90deg,var(--acc,var(--brand)) var(--v,50%),var(--line) var(--v,50%))}
+input[type=range]::-moz-range-track{height:6px;border-radius:6px;background:var(--line)}
+input[type=range]::-moz-range-progress{height:6px;border-radius:6px;background:var(--acc,var(--brand))}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:#fff;margin-top:-10px;box-shadow:0 2px 8px rgba(0,0,0,.25),0 0 0 4px var(--acc,var(--brand));transition:transform .15s}
+input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:4px solid var(--acc,var(--brand))}
+input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.12)}
+.persona-stage{display:flex;justify-content:center;position:relative}
+.persona-stage .phone{width:min(300px,68vw)}
+.persona-stage .scr img{transition:opacity .45s}
+.persona-stage .scr img.off{opacity:0}
+.persona-piki{position:absolute;left:-8%;bottom:-4%;width:min(150px,30vw);transition:transform .45s cubic-bezier(.3,1.5,.5,1)}
+.persona-piki img{position:absolute;left:0;bottom:0;width:100%;transition:opacity .3s}
+.persona-piki img.off{opacity:0}
+@media (max-width:900px){.persona-grid{grid-template-columns:1fr}.persona-stage{margin-top:16px}}
+@media (max-width:640px){
+  .pick{grid-template-columns:1fr}
+  .track{height:auto;margin:16px 0 0;display:flex;flex-direction:column;gap:14px;padding-left:26px}
+  .track .rail{left:7px;right:auto;top:6px;bottom:6px;width:3px;height:auto}
+  .track .fill,.end{display:none}
+  .ms{position:relative;left:auto!important;top:auto;transform:none;display:flex;align-items:center;gap:12px;margin-left:-26px}
+  .ms .lab,.ms.up .lab,.ms.dn .lab{position:static;transform:none;text-align:left;display:flex;gap:8px;align-items:baseline}
+  .ms.goal i{margin:-3px -3px -3px -3px}
+}
+
+/* bento */
+.features{padding-block:clamp(90px,12vw,150px)}
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:48px}
+.bcard{position:relative;border-radius:var(--r-lg);background:var(--bg-alt);overflow:hidden;padding:30px 30px 0;min-height:420px;display:flex;flex-direction:column;transform-style:preserve-3d;will-change:transform;transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .4s}
+.bcard:hover{box-shadow:0 30px 50px -30px rgba(20,60,110,.4)}
+.bcard .glare{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;background:radial-gradient(380px circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.55),transparent 60%);mix-blend-mode:soft-light}
+.bcard:hover .glare{opacity:1}
+.bcard h3{font-size:24px;font-weight:700}
+.bcard p{font-size:15.5px;color:var(--ink-2);margin-top:8px;max-width:22em}
+.bcard .tag{font-size:13px;font-weight:700;color:var(--brand);margin-bottom:8px}
+.bcard .shot{margin-top:auto;padding-top:28px;display:flex;justify-content:center;height:330px;overflow:hidden}
+.bcard .shot .phone{width:min(240px,78%);flex:none;height:max-content;transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.bcard:hover .shot .phone{transform:translateY(var(--scroll,-12%))}
+.c-cal{grid-column:span 4;background:var(--brand-soft)}
+.c-cal .shot{height:380px}
+.c-cal .shot .phone{width:min(270px,56%)}
+.c-home{grid-column:span 2}
+.c-pace{grid-column:span 2}
+.c-rec{grid-column:span 2;background:var(--fit-soft)}
+.c-rec .tag{color:var(--fit)}
+.c-store{grid-column:span 2}
+.c-career{grid-column:span 6;min-height:0;display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:20px}
+.c-career .txt{align-self:center;padding-bottom:30px}
+.c-career .shot{padding-top:0;height:300px}
+@media (max-width:980px){.bento{grid-template-columns:repeat(2,1fr)}.c-cal,.c-career{grid-column:span 2}.c-home,.c-pace,.c-rec,.c-store{grid-column:span 1}}
+@media (max-width:640px){.bento{grid-template-columns:1fr}.bcard{grid-column:span 1!important;min-height:380px}.c-career{grid-template-columns:1fr}.c-career .txt{padding-bottom:0}}
+
+/* gallery */
+.gallery{padding-block:clamp(80px,10vw,130px) clamp(90px,12vw,150px);background:var(--bg-alt);overflow:hidden}
+.gallery .row{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.gallery .hint{font-size:14px;color:var(--ink-3);font-weight:600}
+.strip{margin-top:44px;display:flex;gap:22px;overflow-x:auto;scrollbar-width:none;padding-block:10px 30px;cursor:grab;user-select:none;-webkit-user-select:none;padding-left:max(20px,calc((100vw - 1160px)/2));padding-right:max(20px,calc((100vw - 1160px)/2));scroll-padding-left:max(20px,calc((100vw - 1160px)/2))}
+.strip::-webkit-scrollbar{display:none}
+.strip.drag{cursor:grabbing}
+.strip.drag figure{pointer-events:none}
+.strip figure{margin:0;flex:none;width:220px;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.strip figure:hover{transform:translateY(-10px)}
+.strip figcaption{margin-top:16px;font-size:15px;font-weight:700;letter-spacing:-.02em}
+.strip figcaption span{display:block;font-size:13px;font-weight:500;color:var(--ink-3)}
+.strip img{-webkit-user-drag:none;user-select:none}
+.cursor{position:fixed;left:0;top:0;width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-size:14px;font-weight:700;pointer-events:none;z-index:70;transform:scale(0);transition:transform .25s cubic-bezier(.3,1.4,.5,1);will-change:transform}
+.cursor.show{transform:scale(1)}
+.cursor.down{transform:scale(.82)}
+
+/* cta */
+.cta{padding-block:clamp(100px,14vw,170px) clamp(80px,10vw,120px);text-align:center;overflow:hidden}
+.cta .bubble{display:inline-block;background:var(--brand);color:#fff;font-weight:700;font-size:clamp(18px,2.2vw,24px);padding:14px 26px;border-radius:18px;position:relative;letter-spacing:-.03em;transition:background .3s}
+.cta .bubble::after{content:"";position:absolute;left:50%;bottom:-11px;transform:translateX(-50%);border:12px solid transparent;border-bottom:0;border-top-color:inherit;border-top-color:var(--bbl,var(--brand))}
+.cta-piki{width:min(260px,58vw);margin:22px auto 0;transform-origin:50% 95%;will-change:transform}
+.cta h2{font-size:clamp(34px,5.6vw,64px);font-weight:700;margin-top:28px}
+.cta .lead{margin:16px auto 0}
+.cta .ctas{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:34px}
+/* 성취도 메달 (Figma Medal 14×20 → 4배 56×80) */
+.medals{display:flex;justify-content:center;gap:clamp(14px,3vw,34px);margin-top:40px;flex-wrap:wrap}
+.medal{margin:0;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:default}
+.medal img{width:56px;height:80px;transform-origin:50% 0;transition:transform .5s cubic-bezier(.3,1.6,.5,1);filter:drop-shadow(0 6px 10px rgba(20,60,110,.14))}
+.medal:hover img{transform:translateY(-6px) rotate(-8deg)}
+.medal figcaption{font-size:13px;color:var(--ink-3);line-height:1.3;text-align:center}
+.medal figcaption b{display:block;font-size:15px;color:var(--ink);font-variant-numeric:tabular-nums}
+.medal-note{margin-top:14px;font-size:14px;color:var(--ink-3)}
+.chip-medal{width:28px;height:40px;flex:none}
+@media (prefers-reduced-motion: no-preference){.medal img{animation:sway 3.2s ease-in-out var(--d) infinite}.medal:hover img{animation:none}}
+@keyframes sway{0%,100%{transform:rotate(0)}50%{transform:rotate(4deg)}}
+footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;color:var(--ink-3)}
+footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+
+.reveal{opacity:1;transform:none;transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+.js .reveal.pre{opacity:0;transform:translateY(28px)}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition-duration:.01ms!important;animation:none!important}
+  .js .reveal.pre{opacity:1;transform:none}
+}
+</style>
+
+<header class="nav gutter" id="nav">
+  <div class="container">
+    <a class="brand" href="#top" aria-label="CareeFit 처음으로"><img class="logo-l" src="img/logo.png" alt="Caree Fit" width="121" height="28"><img class="logo-d" src="img/logo-dark.png" alt="Caree Fit" width="121" height="28"></a>
+    <nav class="nav-links" aria-label="섹션">
+      <a class="l" href="#how">작동 방식</a>
+      <a class="l" href="#pace">페이스</a>
+      <a class="l" href="#features">기능</a>
+      <a class="l" href="#screens">화면</a>
+      <a class="btn btn-primary btn-sm magnetic" href="https://claude.ai/artifact/AcEe3Kod3rZJnNffdp9B4u" target="_blank" rel="noopener"><span>체험하기</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero gutter" id="hero">
+    <div class="spot" aria-hidden="true"></div>
+    <div class="container">
+      <div class="reveal pre">
+        <span class="eyebrow">AI 취업 준비 페이스메이커</span>
+        <h1>각자의 페이스로,<br><span class="fit">끝까지.</span></h1>
+        <p class="lead">공고 한 장만 올리면 피키가 내 준비 성향에 맞춰 마감까지의 로드맵을 짜 드려요. 오늘 무엇을 하면 되는지만 보면 돼요.</p>
+        <div class="ctas">
+          <a class="btn btn-primary magnetic" href="https://claude.ai/artifact/AcEe3Kod3rZJnNffdp9B4u" target="_blank" rel="noopener"><span>프로토타입 체험하기</span></a>
+          <a class="btn btn-ghost magnetic" href="#how"><span>어떻게 작동하나요?</span></a>
+        </div>
+      </div>
+      <div class="hero-stage" id="heroStage" aria-label="CareeFit 홈 화면">
+        <div class="hero-phone" id="heroPhone" data-depth="1">
+          <div class="phone"><div class="scr"><img src="img/s-home.webp" alt="CareeFit 홈: 접수 D-39 서비스 기획 인턴, 오늘의 할 일, 접수마감 로드맵" width="600" height="1305"></div></div>
+        </div>
+        <div class="float f1" data-depth="2.2"><span class="dpill">접수 D-39</span><div class="k">NOVABYTE · 서울</div><div class="v">서비스 기획 인턴</div></div>
+        <div class="float f2 ring" data-depth="1.6">
+          <img class="chip-medal" src="img/medal-50.png" alt="" width="28" height="40">
+          <div><div class="k">오늘 성취도</div><div class="v">67% 달성!</div></div>
+        </div>
+        <div class="float f3" data-depth="2.6"><div class="k">D-30 · 다음 단계</div><div class="v">포트폴리오 인터뷰</div></div>
+        <div class="float f4" data-depth="3.2"><img src="img/piki-rec.webp" alt="" width="186" height="234"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="statement gutter" id="statement">
+    <div class="container">
+      <p id="stmt" data-text="취업 준비가 막막한 건 할 일이 많아서가 아니라 *언제 무엇부터 할지* 몰라서예요."></p>
+    </div>
+  </section>
+
+  <section class="story gutter" id="how">
+    <div class="container story-inner">
+      <div>
+        <div class="story-head reveal pre">
+          <span class="eyebrow">작동 방식</span>
+          <h2 class="h2">공고 한 장이면<br>로드맵이 완성돼요</h2>
+        </div>
+        <ol class="steps" id="steps">
+          <li><button class="step on" type="button" data-i="0"><span class="bar"></span><span class="t"><span class="no">01</span>공고를 올려요</span><span class="d">촬영하기, 갤러리, 링크 중 편한 방법으로 올리면 피키가 지원 자격과 마감일, 채용 절차를 꼼꼼히 읽어요.</span><span class="m-shot phone"><span class="scr"><img src="img/s-scan1.webp" alt="" loading="lazy"></span></span></button></li>
+          <li><button class="step" type="button" data-i="1"><span class="bar"></span><span class="t"><span class="no">02</span>정리된 공고를 확인해요</span><span class="d">회사, 직무, 마감일, 내 작업 페이스까지 한 장으로 보여줘요. 틀린 곳은 그 자리에서 고칠 수 있어요.</span><span class="m-shot phone"><span class="scr"><img src="img/s-job.webp" alt="" loading="lazy"></span></span></button></li>
+          <li><button class="step" type="button" data-i="2"><span class="bar"></span><span class="t"><span class="no">03</span>준비 상태를 알려줘요</span><span class="d">이력서, 자소서, 포트폴리오, 면접. 네 가지 질문에 답하면 지금 필요한 일만 골라내요.</span><span class="m-shot phone"><span class="scr"><img src="img/s-prep.webp" alt="" loading="lazy"></span></span></button></li>
+          <li><button class="step" type="button" data-i="3"><span class="bar"></span><span class="t"><span class="no">04</span>마감까지의 로드맵 완성</span><span class="d">남은 기간을 단계별 D-day로 나눠 캘린더에 바로 등록해요. 아직 지원을 고민 중이면 보관함에 저장해도 돼요.</span><span class="m-shot phone"><span class="scr"><img src="img/s-road.webp" alt="" loading="lazy"></span></span></button></li>
+        </ol>
+      </div>
+      <div class="story-stage" aria-hidden="true">
+        <div class="phone"><div class="scr" id="storyScr">
+          <img class="on" src="img/s-scan1.webp" alt="">
+          <img src="img/s-job.webp" alt="">
+          <img src="img/s-prep.webp" alt="">
+          <img src="img/s-road.webp" alt="">
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="persona gutter" id="pace">
+    <div class="container">
+      <div class="reveal pre">
+        <span class="eyebrow">나의 페이스</span>
+        <h2 class="h2">미리 끝내는 사람도,<br>막판에 몰입하는 사람도</h2>
+        <p class="lead">준비 성향에 따라 같은 공고라도 일정이 달라져요. 성향을 고르고 마감 버퍼를 움직여 보세요.</p>
+      </div>
+      <div class="persona-grid">
+        <div>
+          <div class="pick" role="group" aria-label="준비 성향">
+            <button class="pcard" type="button" data-p="stable" aria-pressed="true"><img src="img/piki-stable.webp" alt="" width="520" height="622"><span><span class="t">안정형</span><span class="d">미리 준비해서 마감 3일 전에는 끝내고 싶어</span></span></button>
+            <button class="pcard eff" type="button" data-p="eff" aria-pressed="false"><img src="img/piki-eff.webp" alt="" width="520" height="622"><span><span class="t">몰입형</span><span class="d">벼락치기가 편하고, 마감 직전에 집중력이 폭발해!</span></span></button>
+          </div>
+          <div class="timeline" id="timeline">
+            <div class="tl-head"><b id="tlTitle">안정형 페이스 로드맵</b><span>NOVABYTE 서비스 기획 인턴 · 마감 D-39 기준 예시</span></div>
+            <div class="track" id="track"><div class="rail"></div><div class="fill" id="tlFill"></div><div class="end">마감</div></div>
+            <div class="buffer">
+              <label for="buf">마감 버퍼</label>
+              <input id="buf" type="range" min="0" max="5" step="1" value="3" aria-describedby="bufOut">
+              <output id="bufOut" for="buf">마감 3일 전</output>
+            </div>
+          </div>
+        </div>
+        <div class="persona-stage">
+          <div class="phone"><div class="scr" id="personaScr">
+            <img src="img/s-road.webp" alt="안정형 AI 페이스 로드맵 화면" width="600" height="1305">
+            <img class="off" src="img/s-road-eff.webp" alt="몰입형 AI 페이스 로드맵 화면" width="600" height="1305">
+          </div></div>
+          <div class="persona-piki" id="personaPiki" aria-hidden="true" style="aspect-ratio:520/622">
+            <img src="img/piki-stable.webp" alt="">
+            <img class="off" src="img/piki-eff.webp" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features gutter" id="features">
+    <div class="container">
+      <div class="reveal pre">
+        <span class="eyebrow">기능</span>
+        <h2 class="h2">지원부터 결과까지,<br>한 앱에서 이어져요</h2>
+      </div>
+      <div class="bento">
+        <article class="bcard c-cal tilt reveal pre" style="--scroll:-12%">
+          <div class="glare"></div>
+          <div class="tag">스마트 캘린더</div>
+          <h3>공고 일정과 로드맵을<br>한 달력에서</h3>
+          <p>월간·주간 모드를 오가며 볼 수 있고, 공고·공모전·태그로 바로 찾아요. 일정을 누르면 상세와 페이스 단계가 열려요.</p>
+          <div class="shot"><div class="phone"><div class="scr"><img src="img/s-cal.webp" alt="스마트 캘린더 2027년 1월 월간 화면" loading="lazy"></div></div></div>
+        </article>
+        <article class="bcard c-home tilt reveal pre" style="--scroll:-12%">
+          <div class="glare"></div>
+          <div class="tag">홈</div>
+          <h3>오늘 할 일만 보면 돼요</h3>
+          <p>핵심 일정의 D-day, 오늘의 할 일, 다가오는 공모전까지.</p>
+          <div class="shot"><div class="phone"><div class="scr"><img src="img/s-home-exp.webp" alt="홈 화면: 공모전 카드가 펼쳐진 상태" loading="lazy"></div></div></div>
+        </article>
+        <article class="bcard c-pace tilt reveal pre" style="--scroll:-12%">
+          <div class="glare"></div>
+          <div class="tag">나의 페이스 관리</div>
+          <h3>내 속도를 숫자로</h3>
+          <p>작업 평균 시간과 하루 집중 가능 시간, 마감 버퍼를 휠로 조절해요.</p>
+          <div class="shot"><div class="phone"><div class="scr"><img src="img/s-pace.webp" alt="나의 페이스 관리 화면" loading="lazy"></div></div></div>
+        </article>
+        <article class="bcard c-rec tilt reveal pre" style="--scroll:-12%">
+          <div class="glare"></div>
+          <div class="tag">직무 추천</div>
+          <h3>관심 직무를 고르면<br>피키가 찾아와요</h3>
+          <p>최대 3개까지 고르면 맞춤 공고와 공모전을 추천해요.</p>
+          <div class="shot"><div class="phone"><div class="scr"><img src="img/s-rec.webp" alt="관심 직무 선택 화면" loading="lazy"></div></div></div>
+        </article>
+        <article class="bcard c-store tilt reveal pre" style="--scroll:-12%">
+          <div class="glare"></div>
+          <div class="tag">보관함</div>
+          <h3>마감임박은 먼저 알려줘요</h3>
+          <p>고민 중인 공고는 보관함에. 마감이 가까우면 배너로 띄워요.</p>
+          <div class="shot"><div class="phone"><div class="scr"><img src="img/s-store.webp" alt="보관함 화면" loading="lazy"></div></div></div>
+        </article>
+        <article class="bcard c-career tilt reveal pre" style="--scroll:-12%">
+          <div class="glare"></div>
+          <div class="txt">
+            <div class="tag">마이 커리어</div>
+            <h3>지원한 기록은<br>커리어가 돼요</h3>
+            <p>면접 진행, 수상, 종료까지. 지원한 공고와 참여한 공모전의 결과를 한곳에 모아요.</p>
+          </div>
+          <div class="shot"><div class="phone"><div class="scr"><img src="img/s-career.webp" alt="마이 커리어 화면" loading="lazy"></div></div></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery" id="screens">
+    <div class="container gutter">
+      <div class="row reveal pre">
+        <div><span class="eyebrow">화면 둘러보기</span><h2 class="h2">CareeFit의 모든 화면</h2></div>
+        <p class="hint">좌우로 끌어서 넘겨 보세요</p>
+      </div>
+    </div>
+    <div class="strip" id="strip" tabindex="0" aria-label="앱 화면 목록, 좌우로 스크롤">
+      <figure><div class="phone"><div class="scr"><img src="img/s-intro.webp" alt="" loading="lazy"></div></div><figcaption>스플래시<span>피키와 첫 인사</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="img/s-persona.webp" alt="" loading="lazy"></div></div><figcaption>준비 성향 선택<span>안정형 · 몰입형</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="img/s-onb.webp" alt="" loading="lazy"></div></div><figcaption>로드맵 시작<span>갤러리 · 카메라 · 링크</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="img/s-empty.webp" alt="" loading="lazy"></div></div><figcaption>첫 홈<span>등록 전 빈 상태</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="img/s-menu.webp" alt="" loading="lazy"></div></div><figcaption>+ 메뉴<span>일정 등록 방법</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="img/s-scan2.webp" alt="" loading="lazy"></div></div><figcaption>공고 스캔<span>피키가 내용을 정리 중</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="img/s-job.webp" alt="" loading="lazy"></div></div><figcaption>공고 확인<span>정보 수정 · 페이스 요약</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="img/s-prep-sum.webp" alt="" loading="lazy"></div></div><figcaption>준비 상태 요약<span>로드맵 생성 직전</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="img/s-road.webp" alt="" loading="lazy"></div></div><figcaption>AI 페이스 로드맵<span>단계별 D-day</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="img/s-home.webp" alt="" loading="lazy"></div></div><figcaption>홈<span>오늘의 할 일</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="img/s-goal.webp" alt="" loading="lazy"></div></div><figcaption>목표 일정<span>핵심 일정 고르기</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="img/s-cal-sheet.webp" alt="" loading="lazy"></div></div><figcaption>일정 상세<span>캘린더 바텀시트</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="img/s-pace-eff.webp" alt="" loading="lazy"></div></div><figcaption>페이스 관리<span>몰입형으로 전환</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="img/s-store.webp" alt="" loading="lazy"></div></div><figcaption>보관함<span>마감임박 배너</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="img/s-career.webp" alt="" loading="lazy"></div></div><figcaption>마이 커리어<span>지원 기록과 결과</span></figcaption></figure>
+    </div>
+  </section>
+
+  <section class="cta gutter" id="cta">
+    <div class="container">
+      <div class="bubble" id="ctaBubble">막막한 취업 준비, 같이 가볼까요?</div>
+      <img class="cta-piki" id="ctaPiki" src="img/piki.webp" alt="CareeFit 캐릭터 피키" width="520" height="622">
+      <h2>각자의 페이스로, 끝까지.</h2>
+      <p class="lead">오늘 올린 공고 한 장이 마감 날까지의 길이 돼요.</p>
+      <div class="medals" aria-label="오늘 성취도 메달">
+        <figure class="medal" style="--d:0s"><img src="img/medal-0.png" alt="파란 메달" width="56" height="80"><figcaption><b>0%</b>시작</figcaption></figure>
+        <figure class="medal" style="--d:.08s"><img src="img/medal-10.png" alt="초록 메달" width="56" height="80"><figcaption><b>10%</b>첫걸음</figcaption></figure>
+        <figure class="medal" style="--d:.16s"><img src="img/medal-50.png" alt="노란 메달" width="56" height="80"><figcaption><b>50%</b>절반 달성</figcaption></figure>
+        <figure class="medal" style="--d:.24s"><img src="img/medal-100.png" alt="주황 메달" width="56" height="80"><figcaption><b>100%</b>오늘 완료</figcaption></figure>
+      </div>
+      <p class="medal-note">오늘 할 일을 끝낼수록 메달 색이 바뀌어요.</p>
+      <div class="ctas">
+        <a class="btn btn-primary magnetic" id="ctaBtn" href="https://claude.ai/artifact/AcEe3Kod3rZJnNffdp9B4u" target="_blank" rel="noopener"><span>프로토타입 체험하기</span></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="gutter">
+  <div class="container"><span>© 2026 CareeFit</span><span>앱 화면은 현재 프로토타입에서 캡처했어요.</span></div>
+</footer>
+
+<div class="cursor" id="cursor" aria-hidden="true">드래그</div>
+
+<script>
+(function () {
+  document.documentElement.classList.add('js');
+  var fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var lerp = function (a, b, t) { return a + (b - a) * t; };
+  var clamp = function (v, a, b) { return Math.max(a, Math.min(b, v)); };
+
+  /* phone chrome: 상태바 · 다이내믹 아일랜드 · 홈 인디케이터를 모든 목업에 동일하게 */
+  var SB = '<span class="sb" aria-hidden="true"><span>9:41</span><span class="ic">' +
+    '<svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" fill="currentColor"/><rect x="5" y="5.5" width="3" height="6.5" rx="1" fill="currentColor"/><rect x="10" y="3" width="3" height="9" rx="1" fill="currentColor"/><rect x="15" y="0" width="3" height="12" rx="1" fill="currentColor"/></svg>' +
+    '<svg viewBox="0 0 16 12"><path d="M8 2.2c2.4 0 4.6.9 6.2 2.5l1.3-1.3C13.6 1.4 10.9.3 8 .3S2.4 1.4.5 3.4l1.3 1.3C3.4 3.1 5.6 2.2 8 2.2zm0 3.6c1.4 0 2.7.5 3.6 1.4l1.3-1.3C11.6 4.6 9.9 3.9 8 3.9s-3.6.7-4.9 2l1.3 1.3c.9-.9 2.2-1.4 3.6-1.4zm0 3.5c-.5 0-1 .2-1.3.6L8 11.2l1.3-1.3c-.3-.4-.8-.6-1.3-.6z" fill="currentColor"/></svg>' +
+    '<svg viewBox="0 0 27 12"><rect x=".5" y=".5" width="23" height="11" rx="3.2" fill="none" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="20" height="8" rx="2" fill="currentColor"/><rect x="24.5" y="4" width="1.8" height="4" rx=".9" fill="currentColor" opacity=".45"/></svg>' +
+    '</span></span><span class="isl" aria-hidden="true"></span><span class="home" aria-hidden="true"></span>';
+  document.querySelectorAll('.phone').forEach(function (p) { p.insertAdjacentHTML('beforeend', SB); });
+
+  /* nav */
+  var nav = document.getElementById('nav');
+  var onNav = function () { nav.classList.toggle('scrolled', scrollY > 8); };
+  addEventListener('scroll', onNav, { passive: true }); onNav();
+
+  /* reveal */
+  var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.remove('pre'); io.unobserve(e.target); } }); }, { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('.reveal.pre').forEach(function (el) {
+    var r = el.getBoundingClientRect();
+    if (r.top < innerHeight) el.classList.remove('pre'); else io.observe(el);
+  });
+
+  /* hero: phone tilt + parallax chips + spotlight */
+  var hero = document.getElementById('hero'), phone = document.getElementById('heroPhone');
+  /* 3D 폰 만들기: 두께 판 20장 + 뒷판 + 측면 버튼 + 화면 반사광 + 바닥 그림자 */
+  var BASE_Y = -12, BASE_X = 6, DEPTH = 22;
+  (function build3d() {
+    var html = '';
+    for (var k = DEPTH; k >= 1; k--) {
+      var t = k / DEPTH, L = 52 + 30 * Math.sin(Math.PI * t), cls = k === DEPTH ? 'slab back' : 'slab';
+      html += '<div class="' + cls + '" style="transform:translateZ(' + (-k) + 'px);' + (k === DEPTH ? '' : 'background:hsl(214,9%,' + L.toFixed(1) + '%)') + '"></div>';
+    }
+    var z = -DEPTH / 2;
+    html += '<div class="btns" style="transform:translateZ(' + z + 'px)">' +
+      '<i style="left:-3px;top:17%;height:4%"></i><i style="left:-3px;top:24%;height:8%"></i><i style="left:-3px;top:34%;height:8%"></i><i style="right:-3px;top:27%;height:12%"></i></div>';
+    phone.insertAdjacentHTML('afterbegin', html);
+    phone.querySelector('.scr').insertAdjacentHTML('beforeend', '<span class="sglare" aria-hidden="true"></span>');
+    document.getElementById('heroStage').insertAdjacentHTML('afterbegin', '<div class="ground" aria-hidden="true"></div>');
+  })();
+  var ground = document.querySelector('.ground');
+  var floats = [].slice.call(hero.querySelectorAll('.float'));
+  var tx = 0, ty = 0, cx = 0, cy = 0, heroRaf = null;
+  function heroTick() {
+    cx = lerp(cx, tx, 0.09); cy = lerp(cy, ty, 0.09);
+    var ry = BASE_Y + cx * 34, rx = BASE_X - cy * 20;
+    phone.style.transform = 'translate(-50%,-50%) rotateY(' + ry.toFixed(2) + 'deg) rotateX(' + rx.toFixed(2) + 'deg)';
+    phone.style.setProperty('--gl', (50 - ry * 1.6).toFixed(1) + '%');
+    ground.style.transform = 'translateX(' + (ry * 1.4).toFixed(1) + 'px) scaleX(' + (1 - Math.abs(ry) / 120).toFixed(3) + ')';
+    floats.forEach(function (f) { var d = +f.getAttribute('data-depth'); f.style.transform = 'translate3d(' + (cx * d * 14).toFixed(1) + 'px,' + (cy * d * 14).toFixed(1) + 'px,0)'; });
+    if (Math.abs(cx - tx) > 0.001 || Math.abs(cy - ty) > 0.001) heroRaf = requestAnimationFrame(heroTick); else heroRaf = null;
+  }
+  function kick() { if (!heroRaf) heroRaf = requestAnimationFrame(heroTick); }
+  if (fine && !reduce) {
+    hero.addEventListener('mousemove', function (e) {
+      var r = hero.getBoundingClientRect();
+      var pr = document.getElementById('heroStage').getBoundingClientRect();
+      tx = clamp((e.clientX - (pr.left + pr.width / 2)) / (pr.width * 0.75), -1, 1); ty = clamp((e.clientY - (pr.top + pr.height / 2)) / (pr.height * 0.6), -1, 1);
+      hero.style.setProperty('--mx', (e.clientX - r.left) + 'px'); hero.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      kick();
+    });
+    hero.addEventListener('mouseleave', function () { tx = 0; ty = 0; kick(); });
+  }
+  heroTick();
+
+  /* magnetic buttons */
+  if (fine && !reduce) document.querySelectorAll('.magnetic').forEach(function (b) {
+    b.addEventListener('mousemove', function (e) {
+      var r = b.getBoundingClientRect(), x = e.clientX - r.left - r.width / 2, y = e.clientY - r.top - r.height / 2;
+      b.style.transform = 'translate(' + x * 0.07 + 'px,' + y * 0.1 + 'px)';
+      b.firstElementChild.style.transform = 'translate(' + x * 0.03 + 'px,' + y * 0.04 + 'px)';
+    });
+    b.addEventListener('mouseleave', function () { b.style.transition = 'transform .35s cubic-bezier(.2,.8,.2,1),background .2s'; b.style.transform = ''; b.firstElementChild.style.transform = ''; setTimeout(function () { b.style.transition = ''; }, 450); });
+  });
+
+  /* statement: words light up with scroll */
+  var stmt = document.getElementById('stmt'), words = [];
+  stmt.getAttribute('data-text').split(/(\*[^*]+\*)/).forEach(function (chunk) {
+    var hl = chunk.charAt(0) === '*'; chunk = chunk.replace(/\*/g, '');
+    chunk.split(' ').forEach(function (w) { if (!w) return; var s = document.createElement('span'); s.className = 'w' + (hl ? ' hl' : ''); s.textContent = w; stmt.appendChild(s); stmt.appendChild(document.createTextNode(' ')); words.push(s); });
+  });
+  function onStmt() {
+    var r = stmt.getBoundingClientRect(), p = clamp((innerHeight * 0.85 - r.top) / (innerHeight * 0.55 + r.height * 0.5), 0, 1);
+    if (reduce) p = 1;
+    var n = Math.round(p * words.length);
+    words.forEach(function (w, i) { w.classList.toggle('on', i < n); });
+  }
+
+  /* story: sticky steps */
+  var story = document.getElementById('how'), steps = [].slice.call(document.querySelectorAll('.step')), shots = [].slice.call(document.querySelectorAll('#storyScr img'));
+  var wide = matchMedia('(min-width: 901px)');
+  var cur = -1;
+  function setStep(i) {
+    if (i === cur) return; cur = i;
+    steps.forEach(function (s, k) { s.classList.toggle('on', k === i); s.setAttribute('aria-current', k === i ? 'step' : 'false'); });
+    shots.forEach(function (s, k) { s.classList.toggle('on', k === i); });
+  }
+  function onStory() {
+    if (!wide.matches) return;
+    var r = story.getBoundingClientRect(), total = story.offsetHeight - innerHeight;
+    var p = clamp(-r.top / total, 0, 0.9999), f = p * steps.length, i = Math.floor(f);
+    setStep(i);
+    steps.forEach(function (s, k) { var bar = s.querySelector('.bar'), h = s.offsetHeight - 32; bar.style.height = (k < i ? h : k === i ? h * (f - i) : 0) + 'px'; });
+  }
+  steps.forEach(function (s, k) {
+    s.addEventListener('click', function () {
+      if (!wide.matches) return;
+      var total = story.offsetHeight - innerHeight, top = story.getBoundingClientRect().top + scrollY;
+      scrollTo({ top: top + total * (k + 0.5) / steps.length, behavior: reduce ? 'auto' : 'smooth' });
+    });
+  });
+  setStep(0);
+
+  /* persona timeline */
+  var PLAN = {
+    stable: { title: '안정형 페이스 로드맵', start: 39, buf: 3, acc: 'var(--brand)', shot: 0,
+      items: [['공고 분석', 0], ['직무 역량 분석', .12], ['포트폴리오 인터뷰 준비', .3], ['과제 대비', .5], ['자기소개서 작성', .72], ['최종 검토 · 제출', 1]] },
+    eff: { title: '몰입형 페이스 로드맵', start: 30, buf: 1, acc: 'var(--fit)', shot: 1,
+      items: [['공고 분석', 0], ['포트폴리오 선정', .3], ['프로젝트 정리', .55], ['자기소개서 작성', .72], ['포트폴리오 완성', .86], ['최종 점검 · 제출', 1]] }
+  };
+  var SPAN = 40, persona = 'stable', buf = 3;
+  var track = document.getElementById('track'), fill = document.getElementById('tlFill'), tl = document.getElementById('timeline');
+  var range = document.getElementById('buf'), out = document.getElementById('bufOut'), title = document.getElementById('tlTitle');
+  var pScr = [].slice.call(document.querySelectorAll('#personaScr img')), pPiki = [].slice.call(document.querySelectorAll('#personaPiki img'));
+  var ms = [];
+  for (var i = 0; i < 6; i++) { var m = document.createElement('div'); m.className = 'ms ' + (i % 2 ? 'dn' : 'up') + (i === 5 ? ' goal' : ''); m.innerHTML = '<i></i><span class="lab"><b></b><span></span></span>'; track.appendChild(m); ms.push(m); }
+  function renderPlan() {
+    var P = PLAN[persona];
+    tl.style.setProperty('--acc', P.acc);
+    range.style.setProperty('--acc', P.acc);
+    title.textContent = P.title;
+    out.textContent = buf === 0 ? '마감 당일' : '마감 ' + buf + '일 전';
+    range.style.setProperty('--v', (buf / 5 * 100) + '%');
+    var len = P.start - buf, first = null, last = null;
+    P.items.forEach(function (it, k) {
+      var d = Math.round(P.start - len * it[1]), x = (SPAN - d) / SPAN * 100;
+      ms[k].style.left = x + '%';
+      ms[k].querySelector('b').textContent = d === 0 ? 'D-day' : 'D-' + d;
+      ms[k].querySelector('.lab>span').textContent = it[0];
+      if (first == null) first = x; last = x;
+    });
+    fill.style.left = first + '%'; fill.style.width = (last - first) + '%';
+    document.querySelectorAll('.pcard').forEach(function (c) { c.setAttribute('aria-pressed', c.getAttribute('data-p') === persona ? 'true' : 'false'); });
+    pScr.forEach(function (im, k) { im.classList.toggle('off', k !== P.shot); });
+    pPiki.forEach(function (im, k) { im.classList.toggle('off', k !== P.shot); });
+  }
+  document.querySelectorAll('.pcard').forEach(function (c) {
+    c.addEventListener('click', function () { persona = c.getAttribute('data-p'); buf = PLAN[persona].buf; range.value = buf; renderPlan(); });
+  });
+  range.addEventListener('input', function () { buf = +range.value; renderPlan(); });
+  renderPlan();
+  var pStage = document.querySelector('.persona-stage'), pk = document.getElementById('personaPiki');
+  if (fine && !reduce) {
+    pStage.addEventListener('mousemove', function (e) { var r = pStage.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5; pk.style.transform = 'translateX(' + x * 30 + 'px) rotate(' + x * 14 + 'deg)'; });
+    pStage.addEventListener('mouseleave', function () { pk.style.transform = ''; });
+  }
+
+  /* bento tilt + glare */
+  if (fine && !reduce) document.querySelectorAll('.tilt').forEach(function (c) {
+    c.addEventListener('mousemove', function (e) {
+      var r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+      c.style.transition = 'transform .12s linear,box-shadow .4s';
+      c.style.transform = 'perspective(1100px) rotateY(' + ((x - .5) * 2.5) + 'deg) rotateX(' + ((.5 - y) * 2.5) + 'deg) translateY(-4px)';
+      c.style.setProperty('--gx', x * 100 + '%'); c.style.setProperty('--gy', y * 100 + '%');
+    });
+    c.addEventListener('mouseleave', function () { c.style.transition = ''; c.style.transform = ''; });
+  });
+
+  /* gallery drag with inertia + custom cursor */
+  var strip = document.getElementById('strip'), cursor = document.getElementById('cursor');
+  var down = false, startX = 0, startL = 0, lastX = 0, lastT = 0, vel = 0, moved = 0, fling = null;
+  function stopFling() { if (fling) cancelAnimationFrame(fling); fling = null; }
+  strip.addEventListener('pointerdown', function (e) {
+    if (e.pointerType !== 'mouse') return;
+    stopFling(); down = true; moved = 0; startX = lastX = e.clientX; startL = strip.scrollLeft; lastT = performance.now(); vel = 0;
+    cursor.classList.add('down'); e.preventDefault();
+  });
+  addEventListener('pointermove', function (e) {
+    if (fine) { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; }
+    if (!down) return;
+    var dx = e.clientX - startX; moved = Math.max(moved, Math.abs(dx));
+    if (moved > 4) strip.classList.add('drag');
+    strip.scrollLeft = startL - dx;
+    var t = performance.now(); vel = (e.clientX - lastX) / Math.max(1, t - lastT); lastX = e.clientX; lastT = t;
+  });
+  addEventListener('pointerup', function () {
+    if (!down) return; down = false; strip.classList.remove('drag'); cursor.classList.remove('down');
+    if (reduce) return;
+    var v = vel * 16;
+    (function step() { if (Math.abs(v) < 0.4) { fling = null; return; } strip.scrollLeft -= v; v *= 0.94; fling = requestAnimationFrame(step); })();
+  });
+  if (fine) {
+    strip.addEventListener('mouseenter', function () { cursor.classList.add('show'); });
+    strip.addEventListener('mouseleave', function () { cursor.classList.remove('show'); });
+  }
+  strip.addEventListener('keydown', function (e) {
+    if (e.key === 'ArrowRight') { strip.scrollBy({ left: 240, behavior: reduce ? 'auto' : 'smooth' }); e.preventDefault(); }
+    if (e.key === 'ArrowLeft') { strip.scrollBy({ left: -240, behavior: reduce ? 'auto' : 'smooth' }); e.preventDefault(); }
+  });
+  strip.addEventListener('wheel', function (e) {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && e.shiftKey) { strip.scrollLeft += e.deltaY; e.preventDefault(); }
+  }, { passive: false });
+
+  /* CTA: Piki leans toward cursor, bubble reacts to button hover */
+  var cta = document.getElementById('cta'), cp = document.getElementById('ctaPiki'), bubble = document.getElementById('ctaBubble'), cbtn = document.getElementById('ctaBtn');
+  var pikiSrc = { def: 'img/piki.webp', go: 'img/piki-eff.webp' };
+  new Image().src = pikiSrc.go;
+  if (fine && !reduce) {
+    var lx = 0, lt = 0, lraf = null;
+    var lean = function () { lx = lerp(lx, lt, .1); cp.style.transform = 'rotate(' + (lx * 9).toFixed(2) + 'deg) translateX(' + (lx * 16).toFixed(1) + 'px)'; if (Math.abs(lx - lt) > .001) lraf = requestAnimationFrame(lean); else lraf = null; };
+    cta.addEventListener('mousemove', function (e) { var r = cp.getBoundingClientRect(); lt = clamp((e.clientX - (r.left + r.width / 2)) / (innerWidth / 2), -1, 1); if (!lraf) lraf = requestAnimationFrame(lean); });
+    cta.addEventListener('mouseleave', function () { lt = 0; if (!lraf) lraf = requestAnimationFrame(lean); });
+  }
+  var hoverOn = function () { bubble.textContent = '좋아요! 지금 바로 시작해요'; cp.src = pikiSrc.go; };
+  var hoverOff = function () { bubble.textContent = '막막한 취업 준비, 같이 가볼까요?'; cp.src = pikiSrc.def; };
+  cbtn.addEventListener('mouseenter', hoverOn); cbtn.addEventListener('focus', hoverOn);
+  cbtn.addEventListener('mouseleave', hoverOff); cbtn.addEventListener('blur', hoverOff);
+
+  /* scroll loop */
+  var ticking = false;
+  function onScroll() { if (ticking) return; ticking = true; requestAnimationFrame(function () { ticking = false; onStmt(); onStory(); }); }
+  addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll);
+  onStmt(); onStory();
+})();
+</script>
+
+</body></html>
