@@ -220,7 +220,7 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.12)}
 .features{padding-block:clamp(90px,12vw,150px)}
 .bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:48px}
 .bcard{position:relative;border-radius:var(--r-lg);background:var(--bg-alt);overflow:hidden;padding:30px 30px 0;min-height:420px;display:flex;flex-direction:column;transform-style:preserve-3d;will-change:transform;transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .4s}
-.bcard:hover{box-shadow:0 30px 50px -30px rgba(20,60,110,.4)}
+.bcard:hover{box-shadow:0 24px 44px -30px rgba(20,60,110,.18)}
 .bcard .glare{position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;background:radial-gradient(380px circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.55),transparent 60%);mix-blend-mode:soft-light}
 .bcard:hover .glare{opacity:1}
 .bcard h3{font-size:24px;font-weight:700}
@@ -281,6 +281,25 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.12)}
 .chip-medal{width:28px;height:40px;flex:none}
 @media (prefers-reduced-motion: no-preference){.medal img{animation:sway 3.2s ease-in-out var(--d) infinite}.medal:hover img{animation:none}}
 @keyframes sway{0%,100%{transform:rotate(0)}50%{transform:rotate(4deg)}}
+/* 디자인 프로세스 카드 (CTA 아래) */
+.process{max-width:880px;margin:80px auto 0;text-align:left;background:var(--bg-alt);border-radius:var(--r-lg);padding:clamp(24px,4vw,40px)}
+.process{word-break:keep-all}
+.process h3{font-size:clamp(24px,3.2vw,34px);font-weight:700}
+.process>p{color:var(--ink-2);margin-top:12px;font-size:16px}
+.pstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:28px}
+.pstat{background:var(--card);border-radius:var(--r-md);padding:22px 10px 18px;text-align:center}
+.pstat b{display:block;font-size:clamp(26px,3.4vw,36px);font-weight:700;color:var(--brand);letter-spacing:-.03em;line-height:1.2;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pstat small{display:block;font-size:13px;color:var(--ink-3);margin-top:6px}
+.plink{margin-top:10px;display:flex;align-items:center;gap:16px;padding:20px 22px;border-radius:var(--r-md);background:var(--brand-soft);color:var(--ink);text-decoration:none;transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
+.plink:hover{transform:translateY(-3px);box-shadow:0 14px 30px -18px rgba(20,60,110,.35)}
+.plink .ic{width:46px;height:46px;border-radius:14px;background:var(--card);color:var(--brand);display:grid;place-items:center;flex:none;transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.plink:hover .ic{transform:rotate(-8deg) scale(1.06)}
+.plink .tx{min-width:0}
+.plink b{display:block;font-size:17px;letter-spacing:-.02em}
+.plink small{display:block;font-size:13px;color:var(--ink-3);margin-top:2px}
+.plink .go{margin-left:auto;flex:none;color:var(--brand);transition:transform .25s}
+.plink:hover .go{transform:translate(3px,-3px)}
+@media (max-width:480px){.pstat b{font-size:24px}.pstat{padding:18px 6px 14px}.pstat small{font-size:12px}.plink{padding:18px 16px;gap:12px}}
 footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;color:var(--ink-3)}
 footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
 
@@ -315,7 +334,7 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
       <div class="reveal pre">
         <span class="eyebrow">AI 취업 준비 페이스메이커</span>
         <h1>각자의 페이스로,<br><span class="fit">끝까지.</span></h1>
-        <p class="lead">공고 한 장만 올리면 피키가 내 준비 성향에 맞춰<br>마감까지의 로드맵을 짜 드려요. 오늘 무엇을 하면 되는지만 보면 돼요.</p>
+        <p class="lead">공고 한 장만 올리면 피키가 내 준비 성향에 맞춰 마감까지의 로드맵을 짜 드려요. 오늘 무엇을 하면 되는지만 보면 돼요.</p>
         <div class="ctas">
           <a class="btn btn-primary magnetic" href="https://ssuu-hub.github.io/careefit_APP/"><span>프로토타입 체험하기</span></a>
           <a class="btn btn-ghost magnetic" href="#how"><span>어떻게 작동하나요?</span></a>
@@ -350,8 +369,8 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
           <h2 class="h2">공고 한 장이면<br>로드맵이 완성돼요</h2>
         </div>
         <ol class="steps" id="steps">
-          <li><button class="step on" type="button" data-i="0"><span class="bar"></span><span class="t"><span class="no">01</span>공고를 올려요</span><span class="d">촬영하기, 갤러리, 링크 중 편한 방법으로 올리면 피키가 지원 자격과 마감일,<br>채용 절차를 꼼꼼히 읽어요.</span><span class="m-shot phone"><span class="scr"><img src="s-scan1.webp" alt="" loading="lazy"></span></span></button></li>
-          <li><button class="step" type="button" data-i="1"><span class="bar"></span><span class="t"><span class="no">02</span>정리된 공고를 확인해요</span><span class="d">회사, 직무, 마감일, 내 작업 페이스까지 한 장으로 보여줘요.<br>틀린 곳은 그 자리에서 고칠 수 있어요.</span><span class="m-shot phone"><span class="scr"><img src="s-job.webp" alt="" loading="lazy"></span></span></button></li>
+          <li><button class="step on" type="button" data-i="0"><span class="bar"></span><span class="t"><span class="no">01</span>공고를 올려요</span><span class="d">촬영하기, 갤러리, 링크 중 편한 방법으로 올리면 피키가 지원 자격과 마감일, 채용 절차를 꼼꼼히 읽어요.</span><span class="m-shot phone"><span class="scr"><img src="s-scan1.webp" alt="" loading="lazy"></span></span></button></li>
+          <li><button class="step" type="button" data-i="1"><span class="bar"></span><span class="t"><span class="no">02</span>정리된 공고를 확인해요</span><span class="d">회사, 직무, 마감일, 내 작업 페이스까지 한 장으로 보여줘요. 틀린 곳은 그 자리에서 고칠 수 있어요.</span><span class="m-shot phone"><span class="scr"><img src="s-job.webp" alt="" loading="lazy"></span></span></button></li>
           <li><button class="step" type="button" data-i="2"><span class="bar"></span><span class="t"><span class="no">03</span>준비 상태를 알려줘요</span><span class="d">이력서, 자소서, 포트폴리오, 면접. 네 가지 질문에 답하면 지금 필요한 일만 골라내요.</span><span class="m-shot phone"><span class="scr"><img src="s-prep.webp" alt="" loading="lazy"></span></span></button></li>
           <li><button class="step" type="button" data-i="3"><span class="bar"></span><span class="t"><span class="no">04</span>마감까지의 로드맵 완성</span><span class="d">남은 기간을 단계별 D-day로 나눠 캘린더에 바로 등록해요. 아직 지원을 고민 중이면 보관함에 저장해도 돼요.</span><span class="m-shot phone"><span class="scr"><img src="s-road.webp" alt="" loading="lazy"></span></span></button></li>
         </ol>
@@ -372,13 +391,13 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
       <div class="reveal pre">
         <span class="eyebrow">나의 페이스</span>
         <h2 class="h2">미리 끝내는 사람도,<br>막판에 몰입하는 사람도</h2>
-        <p class="lead">준비 성향에 따라 같은 공고라도 일정이 달라져요.<br>성향을 고르고 마감 버퍼를 움직여 보세요.</p>
+        <p class="lead">준비 성향에 따라 같은 공고라도 일정이 달라져요. 성향을 고르고 마감 버퍼를 움직여 보세요.</p>
       </div>
       <div class="persona-grid">
         <div>
           <div class="pick" role="group" aria-label="준비 성향">
-            <button class="pcard" type="button" data-p="stable" aria-pressed="true"><img src="piki-stable.webp" alt="" width="520" height="622"><span><span class="t">안정형</span><span class="d">미리 준비해서<br>마감 3일 전에는 끝내고 싶어</span></span></button>
-            <button class="pcard eff" type="button" data-p="eff" aria-pressed="false"><img src="piki-eff.webp" alt="" width="520" height="622"><span><span class="t">몰입형</span><span class="d">벼락치기가 편하고,<br>마감 직전에 집중력이 폭발해!</span></span></button>
+            <button class="pcard" type="button" data-p="stable" aria-pressed="true"><img src="piki-stable.webp" alt="" width="520" height="622"><span><span class="t">안정형</span><span class="d">미리 준비해서 마감 3일 전에는 끝내고 싶어</span></span></button>
+            <button class="pcard eff" type="button" data-p="eff" aria-pressed="false"><img src="piki-eff.webp" alt="" width="520" height="622"><span><span class="t">몰입형</span><span class="d">벼락치기가 편하고, 마감 직전에 집중력이 폭발해!</span></span></button>
           </div>
           <div class="timeline" id="timeline">
             <div class="tl-head"><b id="tlTitle">안정형 페이스 로드맵</b><span>NOVABYTE 서비스 기획 인턴 · 마감 D-39 기준 예시</span></div>
@@ -422,14 +441,14 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
           <div class="glare"></div>
           <div class="tag">홈</div>
           <h3>오늘 할 일만 보면 돼요</h3>
-          <p>핵심 일정의 D-day, 오늘의 할 일,<br>다가오는 공모전까지.</p>
+          <p>핵심 일정의 D-day, 오늘의 할 일, 다가오는 공모전까지.</p>
           <div class="shot"><div class="phone"><div class="scr"><img src="s-home-exp.webp" alt="홈 화면: 공모전 카드가 펼쳐진 상태" loading="lazy"></div></div></div>
         </article>
         <article class="bcard c-pace tilt reveal pre" style="--scroll:-12%">
           <div class="glare"></div>
           <div class="tag">나의 페이스 관리</div>
           <h3>내 속도를 숫자로</h3>
-          <p>작업 평균 시간과 하루 집중 가능 시간,<br>마감 버퍼를 휠로 조절해요.</p>
+          <p>작업 평균 시간과 하루 집중 가능 시간, 마감 버퍼를 휠로 조절해요.</p>
           <div class="shot"><div class="phone"><div class="scr"><img src="s-pace.webp" alt="나의 페이스 관리 화면" loading="lazy"></div></div></div>
         </article>
         <article class="bcard c-rec tilt reveal pre" style="--scroll:-12%">
@@ -443,7 +462,7 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
           <div class="glare"></div>
           <div class="tag">보관함</div>
           <h3>마감임박은 먼저 알려줘요</h3>
-          <p>고민 중인 공고는 보관함에.<br>마감이 가까우면 배너로 띄워요.</p>
+          <p>고민 중인 공고는 보관함에. 마감이 가까우면 배너로 띄워요.</p>
           <div class="shot"><div class="phone"><div class="scr"><img src="s-store.webp" alt="보관함 화면" loading="lazy"></div></div></div>
         </article>
         <article class="bcard c-career tilt reveal pre" style="--scroll:-12%">
@@ -451,7 +470,7 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
           <div class="txt">
             <div class="tag">마이 커리어</div>
             <h3>지원한 기록은<br>커리어가 돼요</h3>
-            <p>면접 진행, 수상, 종료까지.<br>지원한 공고와 참여한 공모전의 결과를 한곳에 모아요.</p>
+            <p>면접 진행, 수상, 종료까지. 지원한 공고와 참여한 공모전의 결과를 한곳에 모아요.</p>
           </div>
           <div class="shot"><div class="phone"><div class="scr"><img src="s-career.webp" alt="마이 커리어 화면" loading="lazy"></div></div></div>
         </article>
@@ -501,12 +520,27 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
       <div class="ctas">
         <a class="btn btn-primary magnetic" id="ctaBtn" href="https://ssuu-hub.github.io/careefit_APP/"><span>프로토타입 체험하기</span></a>
       </div>
+      <div class="process reveal pre" id="process">
+        <span class="eyebrow">디자인 프로세스</span>
+        <h3>사용자의 목소리로 완성해가는 CareeFit</h3>
+        <p>사용자 조사와 1차 사용성 테스트에서 발견한 문제를 바탕으로 정보구조와 UI를 개선했어요.<br>2026년 12월, 개선된 디자인의 사용성을 다시 검증해요.</p>
+        <div class="pstats" id="pstats">
+          <div class="pstat"><b><span data-count="60">60</span>명</b><small>사전 조사</small></div>
+          <div class="pstat"><b><span data-count="5">5</span>명</b><small>1차 UT</small></div>
+          <div class="pstat"><b>2차 UT</b><small>12월 예정</small></div>
+        </div>
+        <a class="plink" href="NOTION_URL" target="_blank" rel="noopener">
+          <span class="ic" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4H9a3 3 0 0 1 3 3v13a2.5 2.5 0 0 0-2.5-2.5h-6A1.5 1.5 0 0 1 2 16z"/><path d="M22 5.5A1.5 1.5 0 0 0 20.5 4H15a3 3 0 0 0-3 3v13a2.5 2.5 0 0 1 2.5-2.5h6a1.5 1.5 0 0 0 1.5-1.5z"/></svg></span>
+          <span class="tx"><b>UX 디자인 과정 자세히 보기</b><small>노션 프로젝트 문서로 연결</small></span>
+          <svg class="go" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+        </a>
+      </div>
     </div>
   </section>
 </main>
 
 <footer class="gutter">
-  <div class="container"><span>© 2026 CareeFit</span><span>앱 화면은 현재 프로토타입에서 캡처했어요.</span></div>
+  <div class="container"><span>© 2026 CareeFit</span><span>Designer · JUNGSUHYUN</span></div>
 </footer>
 
 
@@ -727,6 +761,21 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
   var hoverOff = function () { bubble.textContent = '막막한 취업 준비, 같이 가볼까요?'; cp.src = pikiSrc.def; };
   cbtn.addEventListener('mouseenter', hoverOn); cbtn.addEventListener('focus', hoverOn);
   cbtn.addEventListener('mouseleave', hoverOff); cbtn.addEventListener('blur', hoverOff);
+
+  /* 디자인 프로세스: 숫자 카운트업 */
+  var pst = document.getElementById('pstats');
+  if (pst && !reduce) {
+    var nums = [].slice.call(pst.querySelectorAll('[data-count]'));
+    nums.forEach(function (n) { n.textContent = '0'; });
+    var pio = new IntersectionObserver(function (es) {
+      if (!es[0].isIntersecting) return; pio.disconnect();
+      var t0 = performance.now();
+      (function run(t) { var p = Math.min(1, (t - t0) / 1100), e = 1 - Math.pow(1 - p, 3);
+        nums.forEach(function (n) { n.textContent = Math.round(+n.getAttribute('data-count') * e); });
+        if (p < 1) requestAnimationFrame(run); })(t0);
+    }, { threshold: .4 });
+    pio.observe(pst);
+  }
 
   /* scroll loop */
   var ticking = false;
