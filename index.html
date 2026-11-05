@@ -3,10 +3,10 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
 /* Layout: 고정 내비 → 히어로(마우스 틸트 폰) → 스크롤 문장 → 스티키 4단계 스토리 → 성향 비교(타임라인 드래그) → 기능 벤토(틸트 카드) → 드래그 갤러리 → 피키 CTA */
-@font-face{font-family:'Pretendard';font-weight:400;font-display:swap;src:url(fonts/pretendard-400.woff2) format('woff2')}
-@font-face{font-family:'Pretendard';font-weight:500;font-display:swap;src:url(fonts/pretendard-500.woff2) format('woff2')}
-@font-face{font-family:'Pretendard';font-weight:600;font-display:swap;src:url(fonts/pretendard-600.woff2) format('woff2')}
-@font-face{font-family:'Pretendard';font-weight:700;font-display:swap;src:url(fonts/pretendard-700.woff2) format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:400;font-display:swap;src:url(pretendard-400.woff2) format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:500;font-display:swap;src:url(pretendard-500.woff2) format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:600;font-display:swap;src:url(pretendard-600.woff2) format('woff2')}
+@font-face{font-family:'Pretendard';font-weight:700;font-display:swap;src:url(pretendard-700.woff2) format('woff2')}
 :root{
   --bg:#ffffff; --bg-alt:#f3f6fa; --card:#ffffff; --line:#e5e8eb;
   --ink:#191f28; --ink-2:#4e5968; --ink-3:#8b95a1;
@@ -288,13 +288,13 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
 
 <header class="nav gutter" id="nav">
   <div class="container">
-    <a class="brand" href="#top" aria-label="CareeFit 처음으로"><img class="logo-l" src="img/logo.png" alt="Caree Fit" width="121" height="28"><img class="logo-d" src="img/logo-dark.png" alt="Caree Fit" width="121" height="28"></a>
+    <a class="brand" href="#top" aria-label="CareeFit 처음으로"><img class="logo-l" src="logo.png" alt="Caree Fit" width="121" height="28"><img class="logo-d" src="logo-dark.png" alt="Caree Fit" width="121" height="28"></a>
     <nav class="nav-links" aria-label="섹션">
       <a class="l" href="#how">작동 방식</a>
       <a class="l" href="#pace">페이스</a>
       <a class="l" href="#features">기능</a>
       <a class="l" href="#screens">화면</a>
-      <a class="btn btn-primary btn-sm magnetic" href="https://claude.ai/artifact/AcEe3Kod3rZJnNffdp9B4u" target="_blank" rel="noopener"><span>체험하기</span></a>
+      <a class="btn btn-primary btn-sm magnetic" href="https://ssuu-hub.github.io/careefit_App/"><span>체험하기</span></a>
     </nav>
   </div>
 </header>
@@ -308,21 +308,21 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
         <h1>각자의 페이스로,<br><span class="fit">끝까지.</span></h1>
         <p class="lead">공고 한 장만 올리면 피키가 내 준비 성향에 맞춰 마감까지의 로드맵을 짜 드려요. 오늘 무엇을 하면 되는지만 보면 돼요.</p>
         <div class="ctas">
-          <a class="btn btn-primary magnetic" href="https://claude.ai/artifact/AcEe3Kod3rZJnNffdp9B4u" target="_blank" rel="noopener"><span>프로토타입 체험하기</span></a>
+          <a class="btn btn-primary magnetic" href="https://ssuu-hub.github.io/careefit_App/"><span>프로토타입 체험하기</span></a>
           <a class="btn btn-ghost magnetic" href="#how"><span>어떻게 작동하나요?</span></a>
         </div>
       </div>
       <div class="hero-stage" id="heroStage" aria-label="CareeFit 홈 화면">
         <div class="hero-phone" id="heroPhone" data-depth="1">
-          <div class="phone"><div class="scr"><img src="img/s-home.webp" alt="CareeFit 홈: 접수 D-39 서비스 기획 인턴, 오늘의 할 일, 접수마감 로드맵" width="600" height="1305"></div></div>
+          <div class="phone"><div class="scr"><img src="s-home.webp" alt="CareeFit 홈: 접수 D-39 서비스 기획 인턴, 오늘의 할 일, 접수마감 로드맵" width="600" height="1305"></div></div>
         </div>
         <div class="float f1" data-depth="2.2"><span class="dpill">접수 D-39</span><div class="k">NOVABYTE · 서울</div><div class="v">서비스 기획 인턴</div></div>
         <div class="float f2 ring" data-depth="1.6">
-          <img class="chip-medal" src="img/medal-50.png" alt="" width="28" height="40">
+          <img class="chip-medal" src="medal-50.png" alt="" width="28" height="40">
           <div><div class="k">오늘 성취도</div><div class="v">67% 달성!</div></div>
         </div>
         <div class="float f3" data-depth="2.6"><div class="k">D-30 · 다음 단계</div><div class="v">포트폴리오 인터뷰</div></div>
-        <div class="float f4" data-depth="3.2"><img src="img/piki-rec.webp" alt="" width="186" height="234"></div>
+        <div class="float f4" data-depth="3.2"><img src="piki-rec.webp" alt="" width="186" height="234"></div>
       </div>
     </div>
   </section>
@@ -341,18 +341,18 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
           <h2 class="h2">공고 한 장이면<br>로드맵이 완성돼요</h2>
         </div>
         <ol class="steps" id="steps">
-          <li><button class="step on" type="button" data-i="0"><span class="bar"></span><span class="t"><span class="no">01</span>공고를 올려요</span><span class="d">촬영하기, 갤러리, 링크 중 편한 방법으로 올리면 피키가 지원 자격과 마감일, 채용 절차를 꼼꼼히 읽어요.</span><span class="m-shot phone"><span class="scr"><img src="img/s-scan1.webp" alt="" loading="lazy"></span></span></button></li>
-          <li><button class="step" type="button" data-i="1"><span class="bar"></span><span class="t"><span class="no">02</span>정리된 공고를 확인해요</span><span class="d">회사, 직무, 마감일, 내 작업 페이스까지 한 장으로 보여줘요. 틀린 곳은 그 자리에서 고칠 수 있어요.</span><span class="m-shot phone"><span class="scr"><img src="img/s-job.webp" alt="" loading="lazy"></span></span></button></li>
-          <li><button class="step" type="button" data-i="2"><span class="bar"></span><span class="t"><span class="no">03</span>준비 상태를 알려줘요</span><span class="d">이력서, 자소서, 포트폴리오, 면접. 네 가지 질문에 답하면 지금 필요한 일만 골라내요.</span><span class="m-shot phone"><span class="scr"><img src="img/s-prep.webp" alt="" loading="lazy"></span></span></button></li>
-          <li><button class="step" type="button" data-i="3"><span class="bar"></span><span class="t"><span class="no">04</span>마감까지의 로드맵 완성</span><span class="d">남은 기간을 단계별 D-day로 나눠 캘린더에 바로 등록해요. 아직 지원을 고민 중이면 보관함에 저장해도 돼요.</span><span class="m-shot phone"><span class="scr"><img src="img/s-road.webp" alt="" loading="lazy"></span></span></button></li>
+          <li><button class="step on" type="button" data-i="0"><span class="bar"></span><span class="t"><span class="no">01</span>공고를 올려요</span><span class="d">촬영하기, 갤러리, 링크 중 편한 방법으로 올리면 피키가 지원 자격과 마감일, 채용 절차를 꼼꼼히 읽어요.</span><span class="m-shot phone"><span class="scr"><img src="s-scan1.webp" alt="" loading="lazy"></span></span></button></li>
+          <li><button class="step" type="button" data-i="1"><span class="bar"></span><span class="t"><span class="no">02</span>정리된 공고를 확인해요</span><span class="d">회사, 직무, 마감일, 내 작업 페이스까지 한 장으로 보여줘요. 틀린 곳은 그 자리에서 고칠 수 있어요.</span><span class="m-shot phone"><span class="scr"><img src="s-job.webp" alt="" loading="lazy"></span></span></button></li>
+          <li><button class="step" type="button" data-i="2"><span class="bar"></span><span class="t"><span class="no">03</span>준비 상태를 알려줘요</span><span class="d">이력서, 자소서, 포트폴리오, 면접. 네 가지 질문에 답하면 지금 필요한 일만 골라내요.</span><span class="m-shot phone"><span class="scr"><img src="s-prep.webp" alt="" loading="lazy"></span></span></button></li>
+          <li><button class="step" type="button" data-i="3"><span class="bar"></span><span class="t"><span class="no">04</span>마감까지의 로드맵 완성</span><span class="d">남은 기간을 단계별 D-day로 나눠 캘린더에 바로 등록해요. 아직 지원을 고민 중이면 보관함에 저장해도 돼요.</span><span class="m-shot phone"><span class="scr"><img src="s-road.webp" alt="" loading="lazy"></span></span></button></li>
         </ol>
       </div>
       <div class="story-stage" aria-hidden="true">
         <div class="phone"><div class="scr" id="storyScr">
-          <img class="on" src="img/s-scan1.webp" alt="">
-          <img src="img/s-job.webp" alt="">
-          <img src="img/s-prep.webp" alt="">
-          <img src="img/s-road.webp" alt="">
+          <img class="on" src="s-scan1.webp" alt="">
+          <img src="s-job.webp" alt="">
+          <img src="s-prep.webp" alt="">
+          <img src="s-road.webp" alt="">
         </div></div>
       </div>
     </div>
@@ -368,8 +368,8 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
       <div class="persona-grid">
         <div>
           <div class="pick" role="group" aria-label="준비 성향">
-            <button class="pcard" type="button" data-p="stable" aria-pressed="true"><img src="img/piki-stable.webp" alt="" width="520" height="622"><span><span class="t">안정형</span><span class="d">미리 준비해서 마감 3일 전에는 끝내고 싶어</span></span></button>
-            <button class="pcard eff" type="button" data-p="eff" aria-pressed="false"><img src="img/piki-eff.webp" alt="" width="520" height="622"><span><span class="t">몰입형</span><span class="d">벼락치기가 편하고, 마감 직전에 집중력이 폭발해!</span></span></button>
+            <button class="pcard" type="button" data-p="stable" aria-pressed="true"><img src="piki-stable.webp" alt="" width="520" height="622"><span><span class="t">안정형</span><span class="d">미리 준비해서 마감 3일 전에는 끝내고 싶어</span></span></button>
+            <button class="pcard eff" type="button" data-p="eff" aria-pressed="false"><img src="piki-eff.webp" alt="" width="520" height="622"><span><span class="t">몰입형</span><span class="d">벼락치기가 편하고, 마감 직전에 집중력이 폭발해!</span></span></button>
           </div>
           <div class="timeline" id="timeline">
             <div class="tl-head"><b id="tlTitle">안정형 페이스 로드맵</b><span>NOVABYTE 서비스 기획 인턴 · 마감 D-39 기준 예시</span></div>
@@ -383,12 +383,12 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
         </div>
         <div class="persona-stage">
           <div class="phone"><div class="scr" id="personaScr">
-            <img src="img/s-road.webp" alt="안정형 AI 페이스 로드맵 화면" width="600" height="1305">
-            <img class="off" src="img/s-road-eff.webp" alt="몰입형 AI 페이스 로드맵 화면" width="600" height="1305">
+            <img src="s-road.webp" alt="안정형 AI 페이스 로드맵 화면" width="600" height="1305">
+            <img class="off" src="s-road-eff.webp" alt="몰입형 AI 페이스 로드맵 화면" width="600" height="1305">
           </div></div>
           <div class="persona-piki" id="personaPiki" aria-hidden="true" style="aspect-ratio:520/622">
-            <img src="img/piki-stable.webp" alt="">
-            <img class="off" src="img/piki-eff.webp" alt="">
+            <img src="piki-stable.webp" alt="">
+            <img class="off" src="piki-eff.webp" alt="">
           </div>
         </div>
       </div>
@@ -407,35 +407,35 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
           <div class="tag">스마트 캘린더</div>
           <h3>공고 일정과 로드맵을<br>한 달력에서</h3>
           <p>월간·주간 모드를 오가며 볼 수 있고, 공고·공모전·태그로 바로 찾아요. 일정을 누르면 상세와 페이스 단계가 열려요.</p>
-          <div class="shot"><div class="phone"><div class="scr"><img src="img/s-cal.webp" alt="스마트 캘린더 2027년 1월 월간 화면" loading="lazy"></div></div></div>
+          <div class="shot"><div class="phone"><div class="scr"><img src="s-cal.webp" alt="스마트 캘린더 2027년 1월 월간 화면" loading="lazy"></div></div></div>
         </article>
         <article class="bcard c-home tilt reveal pre" style="--scroll:-12%">
           <div class="glare"></div>
           <div class="tag">홈</div>
           <h3>오늘 할 일만 보면 돼요</h3>
           <p>핵심 일정의 D-day, 오늘의 할 일, 다가오는 공모전까지.</p>
-          <div class="shot"><div class="phone"><div class="scr"><img src="img/s-home-exp.webp" alt="홈 화면: 공모전 카드가 펼쳐진 상태" loading="lazy"></div></div></div>
+          <div class="shot"><div class="phone"><div class="scr"><img src="s-home-exp.webp" alt="홈 화면: 공모전 카드가 펼쳐진 상태" loading="lazy"></div></div></div>
         </article>
         <article class="bcard c-pace tilt reveal pre" style="--scroll:-12%">
           <div class="glare"></div>
           <div class="tag">나의 페이스 관리</div>
           <h3>내 속도를 숫자로</h3>
           <p>작업 평균 시간과 하루 집중 가능 시간, 마감 버퍼를 휠로 조절해요.</p>
-          <div class="shot"><div class="phone"><div class="scr"><img src="img/s-pace.webp" alt="나의 페이스 관리 화면" loading="lazy"></div></div></div>
+          <div class="shot"><div class="phone"><div class="scr"><img src="s-pace.webp" alt="나의 페이스 관리 화면" loading="lazy"></div></div></div>
         </article>
         <article class="bcard c-rec tilt reveal pre" style="--scroll:-12%">
           <div class="glare"></div>
           <div class="tag">직무 추천</div>
           <h3>관심 직무를 고르면<br>피키가 찾아와요</h3>
           <p>최대 3개까지 고르면 맞춤 공고와 공모전을 추천해요.</p>
-          <div class="shot"><div class="phone"><div class="scr"><img src="img/s-rec.webp" alt="관심 직무 선택 화면" loading="lazy"></div></div></div>
+          <div class="shot"><div class="phone"><div class="scr"><img src="s-rec.webp" alt="관심 직무 선택 화면" loading="lazy"></div></div></div>
         </article>
         <article class="bcard c-store tilt reveal pre" style="--scroll:-12%">
           <div class="glare"></div>
           <div class="tag">보관함</div>
           <h3>마감임박은 먼저 알려줘요</h3>
           <p>고민 중인 공고는 보관함에. 마감이 가까우면 배너로 띄워요.</p>
-          <div class="shot"><div class="phone"><div class="scr"><img src="img/s-store.webp" alt="보관함 화면" loading="lazy"></div></div></div>
+          <div class="shot"><div class="phone"><div class="scr"><img src="s-store.webp" alt="보관함 화면" loading="lazy"></div></div></div>
         </article>
         <article class="bcard c-career tilt reveal pre" style="--scroll:-12%">
           <div class="glare"></div>
@@ -444,7 +444,7 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
             <h3>지원한 기록은<br>커리어가 돼요</h3>
             <p>면접 진행, 수상, 종료까지. 지원한 공고와 참여한 공모전의 결과를 한곳에 모아요.</p>
           </div>
-          <div class="shot"><div class="phone"><div class="scr"><img src="img/s-career.webp" alt="마이 커리어 화면" loading="lazy"></div></div></div>
+          <div class="shot"><div class="phone"><div class="scr"><img src="s-career.webp" alt="마이 커리어 화면" loading="lazy"></div></div></div>
         </article>
       </div>
     </div>
@@ -458,39 +458,39 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
       </div>
     </div>
     <div class="strip" id="strip" tabindex="0" aria-label="앱 화면 목록, 좌우로 스크롤">
-      <figure><div class="phone"><div class="scr"><img src="img/s-intro.webp" alt="" loading="lazy"></div></div><figcaption>스플래시<span>피키와 첫 인사</span></figcaption></figure>
-      <figure><div class="phone"><div class="scr"><img src="img/s-persona.webp" alt="" loading="lazy"></div></div><figcaption>준비 성향 선택<span>안정형 · 몰입형</span></figcaption></figure>
-      <figure><div class="phone"><div class="scr"><img src="img/s-onb.webp" alt="" loading="lazy"></div></div><figcaption>로드맵 시작<span>갤러리 · 카메라 · 링크</span></figcaption></figure>
-      <figure><div class="phone"><div class="scr"><img src="img/s-empty.webp" alt="" loading="lazy"></div></div><figcaption>첫 홈<span>등록 전 빈 상태</span></figcaption></figure>
-      <figure><div class="phone"><div class="scr"><img src="img/s-menu.webp" alt="" loading="lazy"></div></div><figcaption>+ 메뉴<span>일정 등록 방법</span></figcaption></figure>
-      <figure><div class="phone"><div class="scr"><img src="img/s-scan2.webp" alt="" loading="lazy"></div></div><figcaption>공고 스캔<span>피키가 내용을 정리 중</span></figcaption></figure>
-      <figure><div class="phone"><div class="scr"><img src="img/s-job.webp" alt="" loading="lazy"></div></div><figcaption>공고 확인<span>정보 수정 · 페이스 요약</span></figcaption></figure>
-      <figure><div class="phone"><div class="scr"><img src="img/s-prep-sum.webp" alt="" loading="lazy"></div></div><figcaption>준비 상태 요약<span>로드맵 생성 직전</span></figcaption></figure>
-      <figure><div class="phone"><div class="scr"><img src="img/s-road.webp" alt="" loading="lazy"></div></div><figcaption>AI 페이스 로드맵<span>단계별 D-day</span></figcaption></figure>
-      <figure><div class="phone"><div class="scr"><img src="img/s-home.webp" alt="" loading="lazy"></div></div><figcaption>홈<span>오늘의 할 일</span></figcaption></figure>
-      <figure><div class="phone"><div class="scr"><img src="img/s-goal.webp" alt="" loading="lazy"></div></div><figcaption>목표 일정<span>핵심 일정 고르기</span></figcaption></figure>
-      <figure><div class="phone"><div class="scr"><img src="img/s-cal-sheet.webp" alt="" loading="lazy"></div></div><figcaption>일정 상세<span>캘린더 바텀시트</span></figcaption></figure>
-      <figure><div class="phone"><div class="scr"><img src="img/s-pace-eff.webp" alt="" loading="lazy"></div></div><figcaption>페이스 관리<span>몰입형으로 전환</span></figcaption></figure>
-      <figure><div class="phone"><div class="scr"><img src="img/s-store.webp" alt="" loading="lazy"></div></div><figcaption>보관함<span>마감임박 배너</span></figcaption></figure>
-      <figure><div class="phone"><div class="scr"><img src="img/s-career.webp" alt="" loading="lazy"></div></div><figcaption>마이 커리어<span>지원 기록과 결과</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="s-intro.webp" alt="" loading="lazy"></div></div><figcaption>스플래시<span>피키와 첫 인사</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="s-persona.webp" alt="" loading="lazy"></div></div><figcaption>준비 성향 선택<span>안정형 · 몰입형</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="s-onb.webp" alt="" loading="lazy"></div></div><figcaption>로드맵 시작<span>갤러리 · 카메라 · 링크</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="s-empty.webp" alt="" loading="lazy"></div></div><figcaption>첫 홈<span>등록 전 빈 상태</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="s-menu.webp" alt="" loading="lazy"></div></div><figcaption>+ 메뉴<span>일정 등록 방법</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="s-scan2.webp" alt="" loading="lazy"></div></div><figcaption>공고 스캔<span>피키가 내용을 정리 중</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="s-job.webp" alt="" loading="lazy"></div></div><figcaption>공고 확인<span>정보 수정 · 페이스 요약</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="s-prep-sum.webp" alt="" loading="lazy"></div></div><figcaption>준비 상태 요약<span>로드맵 생성 직전</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="s-road.webp" alt="" loading="lazy"></div></div><figcaption>AI 페이스 로드맵<span>단계별 D-day</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="s-home.webp" alt="" loading="lazy"></div></div><figcaption>홈<span>오늘의 할 일</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="s-goal.webp" alt="" loading="lazy"></div></div><figcaption>목표 일정<span>핵심 일정 고르기</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="s-cal-sheet.webp" alt="" loading="lazy"></div></div><figcaption>일정 상세<span>캘린더 바텀시트</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="s-pace-eff.webp" alt="" loading="lazy"></div></div><figcaption>페이스 관리<span>몰입형으로 전환</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="s-store.webp" alt="" loading="lazy"></div></div><figcaption>보관함<span>마감임박 배너</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="s-career.webp" alt="" loading="lazy"></div></div><figcaption>마이 커리어<span>지원 기록과 결과</span></figcaption></figure>
     </div>
   </section>
 
   <section class="cta gutter" id="cta">
     <div class="container">
       <div class="bubble" id="ctaBubble">막막한 취업 준비, 같이 가볼까요?</div>
-      <img class="cta-piki" id="ctaPiki" src="img/piki.webp" alt="CareeFit 캐릭터 피키" width="520" height="622">
+      <img class="cta-piki" id="ctaPiki" src="piki.webp" alt="CareeFit 캐릭터 피키" width="520" height="622">
       <h2>각자의 페이스로, 끝까지.</h2>
       <p class="lead">오늘 올린 공고 한 장이 마감 날까지의 길이 돼요.</p>
       <div class="medals" aria-label="오늘 성취도 메달">
-        <figure class="medal" style="--d:0s"><img src="img/medal-0.png" alt="파란 메달" width="56" height="80"><figcaption><b>0%</b>시작</figcaption></figure>
-        <figure class="medal" style="--d:.08s"><img src="img/medal-10.png" alt="초록 메달" width="56" height="80"><figcaption><b>10%</b>첫걸음</figcaption></figure>
-        <figure class="medal" style="--d:.16s"><img src="img/medal-50.png" alt="노란 메달" width="56" height="80"><figcaption><b>50%</b>절반 달성</figcaption></figure>
-        <figure class="medal" style="--d:.24s"><img src="img/medal-100.png" alt="주황 메달" width="56" height="80"><figcaption><b>100%</b>오늘 완료</figcaption></figure>
+        <figure class="medal" style="--d:0s"><img src="medal-0.png" alt="파란 메달" width="56" height="80"><figcaption><b>0%</b>시작</figcaption></figure>
+        <figure class="medal" style="--d:.08s"><img src="medal-10.png" alt="초록 메달" width="56" height="80"><figcaption><b>10%</b>첫걸음</figcaption></figure>
+        <figure class="medal" style="--d:.16s"><img src="medal-50.png" alt="노란 메달" width="56" height="80"><figcaption><b>50%</b>절반 달성</figcaption></figure>
+        <figure class="medal" style="--d:.24s"><img src="medal-100.png" alt="주황 메달" width="56" height="80"><figcaption><b>100%</b>오늘 완료</figcaption></figure>
       </div>
       <p class="medal-note">오늘 할 일을 끝낼수록 메달 색이 바뀌어요.</p>
       <div class="ctas">
-        <a class="btn btn-primary magnetic" id="ctaBtn" href="https://claude.ai/artifact/AcEe3Kod3rZJnNffdp9B4u" target="_blank" rel="noopener"><span>프로토타입 체험하기</span></a>
+        <a class="btn btn-primary magnetic" id="ctaBtn" href="https://ssuu-hub.github.io/careefit_App/"><span>프로토타입 체험하기</span></a>
       </div>
     </div>
   </section>
@@ -712,7 +712,7 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
 
   /* CTA: Piki leans toward cursor, bubble reacts to button hover */
   var cta = document.getElementById('cta'), cp = document.getElementById('ctaPiki'), bubble = document.getElementById('ctaBubble'), cbtn = document.getElementById('ctaBtn');
-  var pikiSrc = { def: 'img/piki.webp', go: 'img/piki-eff.webp' };
+  var pikiSrc = { def: 'piki.webp', go: 'piki-eff.webp' };
   new Image().src = pikiSrc.go;
   if (fine && !reduce) {
     var lx = 0, lt = 0, lraf = null;
