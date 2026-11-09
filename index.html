@@ -244,7 +244,11 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.12)}
 @media (max-width:640px){.bento{grid-template-columns:1fr}.bcard{grid-column:span 1!important;min-height:380px}.c-career{grid-template-columns:1fr}.c-career .txt{padding-bottom:0}}
 
 /* gallery */
-.gallery{padding-block:clamp(80px,10vw,130px) clamp(90px,12vw,150px);background:var(--bg-alt);overflow:hidden}
+/* 세로 스크롤 → 가로 이동: 섹션 높이만큼 스크롤하는 동안 화면 목록이 고정된 채 옆으로 흐름 */
+.gallery{background:var(--bg-alt);overflow:clip}
+.gal-pin{position:sticky;top:0;height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:center;overflow:hidden;padding-top:64px}
+.gal-bar{height:3px;border-radius:3px;background:var(--line);margin-top:22px;overflow:hidden}
+.gal-bar i{display:block;height:100%;width:100%;background:var(--brand);transform-origin:0 50%;transform:scaleX(0)}
 .gallery .row{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
 .gallery .hint{font-size:14px;color:var(--ink-3);font-weight:600}
 .gal-title{display:flex;align-items:center;flex-wrap:wrap;gap:.12em}
@@ -252,12 +256,10 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.12)}
 .gal-title .logo-d{display:none}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .gal-title .logo-l{display:none}:root:not([data-theme="light"]) .gal-title .logo-d{display:block}}
 :root[data-theme="dark"] .gal-title .logo-l{display:none}:root[data-theme="dark"] .gal-title .logo-d{display:block}
-.strip{margin-top:44px;display:flex;gap:22px;overflow-x:auto;scrollbar-width:none;padding-block:10px 30px;cursor:grab;user-select:none;-webkit-user-select:none;padding-left:max(20px,calc((100vw - 1160px)/2));padding-right:max(20px,calc((100vw - 1160px)/2));scroll-padding-left:max(20px,calc((100vw - 1160px)/2))}
-.strip::-webkit-scrollbar{display:none}
-.strip.drag{cursor:grabbing}
-.strip.drag figure{pointer-events:none}
-.strip figure{margin:0;flex:none;width:220px;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
-.strip figure:hover{transform:translateY(-10px)}
+.strip{margin-top:clamp(20px,4vh,40px);display:flex;gap:22px;width:max-content;padding-block:40px 4px;will-change:transform;padding-left:max(20px,calc((100vw - 1160px)/2));padding-right:max(20px,calc((100vw - 1160px)/2))}
+.strip figure{margin:0;flex:none;width:clamp(130px,calc((100svh - 370px) / 2.2),220px);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.strip figure{position:relative;transform-origin:50% 100%}
+.strip figure:hover{transform:translateY(-10px) scale(1.06);z-index:1}
 .strip figcaption{margin-top:16px;font-size:15px;font-weight:700;letter-spacing:-.02em}
 .strip figcaption span{display:block;font-size:13px;font-weight:500;color:var(--ink-3)}
 .strip img{-webkit-user-drag:none;user-select:none}
@@ -316,7 +318,7 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
   <div class="container">
     <a class="brand" href="#top" aria-label="CareeFit 처음으로"><img class="logo-l" src="logo.png" alt="Caree Fit" width="121" height="28"><img class="logo-d" src="logo-dark.png" alt="Caree Fit" width="121" height="28"></a>
     <nav class="nav-links" aria-label="섹션">
-      <a class="l" href="#how">작동 방식</a>
+      <a class="l" href="#how">사용 방법</a>
       <a class="l" href="#pace">페이스</a>
       <a class="l" href="#features">기능</a>
       <a class="l" href="#screens">화면</a>
@@ -335,7 +337,7 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
         <p class="lead">공고 한 장만 올리면 피키가 내 준비 성향에 맞춰<br>마감까지의 로드맵을 짜 드려요. 오늘 무엇을 하면 되는지만 보면 돼요.</p>
         <div class="ctas">
           <a class="btn btn-primary magnetic" href="https://ssuu-hub.github.io/careefit_APP/"><span>프로토타입 체험하기</span></a>
-          <a class="btn btn-ghost magnetic" href="#how"><span>어떻게 작동하나요?</span></a>
+          <a class="btn btn-ghost magnetic" href="#how"><span>어떻게 사용하나요?</span></a>
         </div>
       </div>
       <div class="hero-stage" id="heroStage" aria-label="CareeFit 홈 화면">
@@ -363,7 +365,7 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
     <div class="container story-inner">
       <div>
         <div class="story-head reveal pre">
-          <span class="eyebrow">작동 방식</span>
+          <span class="eyebrow">사용 방법</span>
           <h2 class="h2">공고 한 장이면<br>로드맵이 완성돼요</h2>
         </div>
         <ol class="steps" id="steps">
@@ -439,7 +441,7 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
           <div class="glare"></div>
           <div class="tag">홈</div>
           <h3>오늘 할 일만 보면 돼요</h3>
-          <p>핵심 일정의 D-day, 오늘의 할 일,<br>다가오는 공모전까지.</p>
+          <p>핵심 일정의 D-day, 오늘의 할 일,<br>다음 일정까지.</p>
           <div class="shot"><div class="phone"><div class="scr"><img src="s-home-exp.webp" alt="홈 화면: 공모전 카드가 펼쳐진 상태" loading="lazy"></div></div></div>
         </article>
         <article class="bcard c-pace tilt reveal pre" style="--scroll:-12%">
@@ -477,13 +479,14 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
   </section>
 
   <section class="gallery" id="screens">
+    <div class="gal-pin">
     <div class="container gutter">
       <div class="row reveal pre">
         <div><span class="eyebrow">화면 둘러보기</span><h2 class="h2 gal-title"><img class="logo-l" src="logo-lg.png" alt="CareeFit" width="647" height="150"><img class="logo-d" src="logo-lg-dark.png" alt="CareeFit" width="647" height="150"><span>의 모든 화면</span></h2></div>
-        <p class="hint">좌우로 끌어서 넘겨 보세요</p>
+        <p class="hint">아래로 스크롤하면 옆으로 넘어가요</p>
       </div>
     </div>
-    <div class="strip" id="strip" tabindex="0" aria-label="앱 화면 목록, 좌우로 스크롤">
+    <div class="strip" id="strip" aria-label="앱 화면 목록">
       <figure><div class="phone"><div class="scr"><img src="s-intro.webp" alt="" loading="lazy"></div></div><figcaption>스플래시<span>피키와 첫 인사</span></figcaption></figure>
       <figure><div class="phone"><div class="scr"><img src="s-persona.webp" alt="" loading="lazy"></div></div><figcaption>준비 성향 선택<span>안정형 · 몰입형</span></figcaption></figure>
       <figure><div class="phone"><div class="scr"><img src="s-onb.webp" alt="" loading="lazy"></div></div><figcaption>로드맵 시작<span>갤러리 · 카메라 · 링크</span></figcaption></figure>
@@ -499,6 +502,8 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
       <figure><div class="phone"><div class="scr"><img src="s-pace-eff.webp" alt="" loading="lazy"></div></div><figcaption>페이스 관리<span>몰입형으로 전환</span></figcaption></figure>
       <figure><div class="phone"><div class="scr"><img src="s-store.webp" alt="" loading="lazy"></div></div><figcaption>보관함<span>마감임박 배너</span></figcaption></figure>
       <figure><div class="phone"><div class="scr"><img src="s-career.webp" alt="" loading="lazy"></div></div><figcaption>마이 커리어<span>지원 기록과 결과</span></figcaption></figure>
+    </div>
+    <div class="container gutter"><div class="gal-bar" aria-hidden="true"><i id="galBar"></i></div></div>
     </div>
   </section>
 
@@ -717,35 +722,21 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
     c.addEventListener('mouseleave', function () { c.style.transition = ''; c.style.transform = ''; });
   });
 
-  /* gallery drag with inertia */
-  var strip = document.getElementById('strip');
-  var down = false, startX = 0, startL = 0, lastX = 0, lastT = 0, vel = 0, moved = 0, fling = null;
-  function stopFling() { if (fling) cancelAnimationFrame(fling); fling = null; }
-  strip.addEventListener('pointerdown', function (e) {
-    if (e.pointerType !== 'mouse') return;
-    stopFling(); down = true; moved = 0; startX = lastX = e.clientX; startL = strip.scrollLeft; lastT = performance.now(); vel = 0;
-    e.preventDefault();
-  });
-  addEventListener('pointermove', function (e) {
-    if (!down) return;
-    var dx = e.clientX - startX; moved = Math.max(moved, Math.abs(dx));
-    if (moved > 4) strip.classList.add('drag');
-    strip.scrollLeft = startL - dx;
-    var t = performance.now(); vel = (e.clientX - lastX) / Math.max(1, t - lastT); lastX = e.clientX; lastT = t;
-  });
-  addEventListener('pointerup', function () {
-    if (!down) return; down = false; strip.classList.remove('drag');
-    if (reduce) return;
-    var v = vel * 16;
-    (function step() { if (Math.abs(v) < 0.4) { fling = null; return; } strip.scrollLeft -= v; v *= 0.94; fling = requestAnimationFrame(step); })();
-  });
-  strip.addEventListener('keydown', function (e) {
-    if (e.key === 'ArrowRight') { strip.scrollBy({ left: 240, behavior: reduce ? 'auto' : 'smooth' }); e.preventDefault(); }
-    if (e.key === 'ArrowLeft') { strip.scrollBy({ left: -240, behavior: reduce ? 'auto' : 'smooth' }); e.preventDefault(); }
-  });
-  strip.addEventListener('wheel', function (e) {
-    if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && e.shiftKey) { strip.scrollLeft += e.deltaY; e.preventDefault(); }
-  }, { passive: false });
+  /* gallery: 세로 스크롤 진행도만큼 화면 목록을 왼쪽→오른쪽으로 이동 (휠을 올리면 반대로) */
+  var gal = document.getElementById('screens'), strip = document.getElementById('strip'), galBar = document.getElementById('galBar'), galShift = 0;
+  function sizeGal() {
+    galShift = Math.max(0, strip.offsetWidth - document.documentElement.clientWidth);
+    gal.style.height = (innerHeight + galShift) + 'px';
+    onGal();
+  }
+  function onGal() {
+    var total = gal.offsetHeight - innerHeight, p = total > 0 ? clamp(-gal.getBoundingClientRect().top / total, 0, 1) : 0;
+    strip.style.transform = 'translate3d(' + (-p * galShift).toFixed(1) + 'px,0,0)';
+    galBar.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+  }
+  sizeGal();
+  addEventListener('resize', sizeGal);
+  addEventListener('load', sizeGal);
 
   /* CTA: Piki leans toward cursor, bubble reacts to button hover */
   var cta = document.getElementById('cta'), cp = document.getElementById('ctaPiki'), bubble = document.getElementById('ctaBubble'), cbtn = document.getElementById('ctaBtn');
@@ -820,7 +811,7 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
 
   /* scroll loop */
   var ticking = false;
-  function onScroll() { if (ticking) return; ticking = true; requestAnimationFrame(function () { ticking = false; onStmt(); onStory(); }); }
+  function onScroll() { if (ticking) return; ticking = true; requestAnimationFrame(function () { ticking = false; onStmt(); onStory(); onGal(); }); }
   addEventListener('scroll', onScroll, { passive: true });
   addEventListener('resize', onScroll);
   onStmt(); onStory();
