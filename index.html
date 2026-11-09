@@ -151,6 +151,19 @@ section{position:relative}
 .scan-spin{position:absolute;z-index:1;left:50%;top:39.85%;width:14%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:#fff;display:grid;place-items:center;transition:opacity .5s ease;pointer-events:none}
 .scan-spin::after{content:"";width:72%;aspect-ratio:1;box-sizing:border-box;border-radius:50%;border:.95cqw solid #eceff2;border-top-color:#4aa8fd;border-right-color:#4aa8fd;animation:scanspin .9s linear infinite}
 @keyframes scanspin{to{transform:rotate(360deg)}}
+/* 준비 상태 단계: 이력서 → 자소서 → 포트폴리오 → 면접 → 요약 화면을 차례로 겹쳐 보여줌 */
+.scr img.pf{opacity:0;transform:none!important;transition:opacity .35s ease}
+.scr img.pf.show{opacity:1}
+/* 로드맵 완성 단계: 긴 화면이 스크롤에 맞춰 위로 올라가고, 하단 내비게이션은 화면 아래에 고정 */
+.phone .scr img.tall{height:auto;bottom:auto}
+.story-stage .scr img.tall{transition:opacity .5s ease,transform .12s linear}
+.road-nav{position:absolute;inset:0;z-index:1;pointer-events:none;transition:opacity .4s ease}
+.story-stage .road-nav{opacity:0}
+.phone .scr .road-nav img.ngb,.story-stage .scr .road-nav img.ngb{inset:auto;left:2.736%;bottom:5.034%;width:94.53%;height:auto;opacity:1;transform:none;transition:none}
+.road-nav .band{position:absolute;left:0;right:0;bottom:0;height:5.034%;background:#fdfdfd}
+.road-nav::before{content:"";position:absolute;left:0;right:0;top:0;height:5.6%;background:#fdfdfd}
+.m-shot .scr img.tall{animation:roadscroll 8s ease-in-out infinite}
+@keyframes roadscroll{0%,15%{transform:translateY(0)}50%,65%{transform:translateY(-29.288%)}100%{transform:translateY(0)}}
 @media (max-width:900px){
   .story{height:auto;padding-block:90px}
   .story-inner{position:static;height:auto;grid-template-columns:1fr}
@@ -375,8 +388,8 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
         <ol class="steps" id="steps">
           <li><button class="step on" type="button" data-i="0"><span class="bar"></span><span class="t"><span class="no">01</span>공고를 올려요</span><span class="d">촬영하기, 갤러리, 링크 중 편한 방법으로 올리면 피키가 지원 자격과 마감일,<br>채용 절차를 꼼꼼히 읽어요.</span><span class="m-shot phone"><span class="scr"><img src="s-scan1.webp" alt="" loading="lazy"><span class="scan-spin" aria-hidden="true"></span></span></span></button></li>
           <li><button class="step" type="button" data-i="1"><span class="bar"></span><span class="t"><span class="no">02</span>정리된 공고를 확인해요</span><span class="d">회사, 직무, 마감일, 내 작업 페이스까지 한 장으로 보여줘요.<br>틀린 곳은 그 자리에서 고칠 수 있어요.</span><span class="m-shot phone"><span class="scr"><img src="s-job.webp" alt="" loading="lazy"></span></span></button></li>
-          <li><button class="step" type="button" data-i="2"><span class="bar"></span><span class="t"><span class="no">03</span>준비 상태를 알려줘요</span><span class="d">이력서, 자소서, 포트폴리오, 면접. 네 가지 질문에 답하면 지금 필요한 일만 골라내요.</span><span class="m-shot phone"><span class="scr"><img src="s-prep.webp" alt="" loading="lazy"></span></span></button></li>
-          <li><button class="step" type="button" data-i="3"><span class="bar"></span><span class="t"><span class="no">04</span>마감까지의 로드맵 완성</span><span class="d">남은 기간을 단계별 D-day로 나눠 캘린더에 바로 등록해요. 아직 지원을 고민 중이면 보관함에 저장해도 돼요.</span><span class="m-shot phone"><span class="scr"><img src="s-road.webp" alt="" loading="lazy"></span></span></button></li>
+          <li><button class="step" type="button" data-i="2"><span class="bar"></span><span class="t"><span class="no">03</span>준비 상태를 알려줘요</span><span class="d">이력서, 자소서, 포트폴리오, 면접. 네 가지 질문에 답하면 지금 필요한 일만 골라내요.</span><span class="m-shot phone"><span class="scr" id="mPrep"><img src="s-prep1-v2.webp" alt="" loading="lazy"><img class="pf" src="s-prep2-v2.webp" alt="" loading="lazy"><img class="pf" src="s-prep3-v2.webp" alt="" loading="lazy"><img class="pf" src="s-prep4-v2.webp" alt="" loading="lazy"><img class="pf" src="s-prep5-v2.webp" alt="" loading="lazy"></span></span></button></li>
+          <li><button class="step" type="button" data-i="3"><span class="bar"></span><span class="t"><span class="no">04</span>마감까지의 로드맵 완성</span><span class="d">남은 기간을 단계별 D-day로 나눠 캘린더에 바로 등록해요. 아직 지원을 고민 중이면 보관함에 저장해도 돼요.</span><span class="m-shot phone"><span class="scr"><img class="tall" src="s-road-full.webp" alt="" loading="lazy"><span class="road-nav" aria-hidden="true"><img class="ngb" src="ngb.png" alt=""><span class="band"></span></span></span></span></button></li>
         </ol>
       </div>
       <div class="story-stage" aria-hidden="true">
@@ -384,8 +397,13 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
           <img class="on" src="s-scan1.webp" alt="">
           <span class="scan-spin" id="storySpin" aria-hidden="true"></span>
           <img src="s-job.webp" alt="">
-          <img src="s-prep.webp" alt="">
-          <img src="s-road.webp" alt="">
+          <img src="s-prep1-v2.webp" alt="">
+          <img class="pf" src="s-prep2-v2.webp" alt="">
+          <img class="pf" src="s-prep3-v2.webp" alt="">
+          <img class="pf" src="s-prep4-v2.webp" alt="">
+          <img class="pf" src="s-prep5-v2.webp" alt="">
+          <img class="tall" id="roadImg" src="s-road-full.webp" alt="">
+          <span class="road-nav" id="roadNav" aria-hidden="true"><img class="ngb" src="ngb.png" alt=""><span class="band"></span></span>
         </div></div>
       </div>
     </div>
@@ -499,7 +517,7 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
       <figure><div class="phone"><div class="scr"><img src="s-menu.webp" alt="" loading="lazy"></div></div><figcaption>+ 메뉴<span>일정 등록 방법</span></figcaption></figure>
       <figure><div class="phone"><div class="scr"><img src="s-scan2.webp" alt="" loading="lazy"></div></div><figcaption>공고 스캔<span>피키가 내용을 정리 중</span></figcaption></figure>
       <figure><div class="phone"><div class="scr"><img src="s-job.webp" alt="" loading="lazy"></div></div><figcaption>공고 확인<span>정보 수정 · 페이스 요약</span></figcaption></figure>
-      <figure><div class="phone"><div class="scr"><img src="s-prep-sum.webp" alt="" loading="lazy"></div></div><figcaption>준비 상태 요약<span>로드맵 생성 직전</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="s-prep-sum-v2.webp" alt="" loading="lazy"></div></div><figcaption>준비 상태 요약<span>로드맵 생성 직전</span></figcaption></figure>
       <figure><div class="phone"><div class="scr"><img src="s-road.webp" alt="" loading="lazy"></div></div><figcaption>AI 페이스 로드맵<span>단계별 D-day</span></figcaption></figure>
       <figure><div class="phone"><div class="scr"><img src="s-home.webp" alt="" loading="lazy"></div></div><figcaption>홈<span>오늘의 할 일</span></figcaption></figure>
       <figure><div class="phone"><div class="scr"><img src="s-goal.webp" alt="" loading="lazy"></div></div><figcaption>목표 일정<span>핵심 일정 고르기</span></figcaption></figure>
@@ -648,7 +666,7 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
   }
 
   /* story: sticky steps */
-  var story = document.getElementById('how'), steps = [].slice.call(document.querySelectorAll('.step')), shots = [].slice.call(document.querySelectorAll('#storyScr img'));
+  var story = document.getElementById('how'), steps = [].slice.call(document.querySelectorAll('.step')), shots = [].slice.call(document.querySelectorAll('#storyScr > img:not(.pf)')), prepF = [].slice.call(document.querySelectorAll('#storyScr .pf')), roadImg = document.getElementById('roadImg'), roadNav = document.getElementById('roadNav');
   var wide = matchMedia('(min-width: 901px)');
   var cur = -1;
   function setStep(i) {
@@ -662,6 +680,11 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
     var r = story.getBoundingClientRect(), total = story.offsetHeight - innerHeight;
     var p = clamp(-r.top / total, 0, 0.9999), f = p * steps.length, i = Math.floor(f);
     setStep(i);
+    var k = i === 2 ? Math.min(4, Math.floor((f - i) * 5.4)) : 0;   // 03 단계 구간 안에서 5개 화면을 차례로
+    prepF.forEach(function (im, j) { im.classList.toggle('show', i === 2 && j + 1 <= k); });
+    var rk = i === 3 ? clamp((f - 3 - 0.12) / 0.7, 0, 1) : 0;   // 04 단계 구간 동안 긴 로드맵 화면을 위로 올림
+    roadImg.style.transform = i === 3 ? 'translateY(' + (-rk * 29.288).toFixed(2) + '%)' : '';
+    roadNav.style.opacity = i === 3 ? '1' : '0';
     steps.forEach(function (s, k) { var bar = s.querySelector('.bar'), h = s.offsetHeight - 32; bar.style.height = (k < i ? h : k === i ? h * (f - i) : 0) + 'px'; });
   }
   steps.forEach(function (s, k) {
@@ -672,6 +695,12 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
     });
   });
   setStep(0);
+  /* 모바일: 03 단계 목업은 시간에 따라 5개 화면을 반복 */
+  (function () {
+    var mf = [].slice.call(document.querySelectorAll('#mPrep .pf')), n = 0;
+    if (!mf.length || reduce) return;
+    setInterval(function () { if (wide.matches) return; n = (n + 1) % 6; mf.forEach(function (im, j) { im.classList.toggle('show', j + 1 <= Math.min(n, 4)); }); }, 1400);
+  })();
 
   /* persona timeline */
   var PLAN = {
