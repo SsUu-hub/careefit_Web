@@ -511,11 +511,11 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
     </div>
     <div class="strip" id="strip" aria-label="앱 화면 목록">
       <figure><div class="phone"><div class="scr"><img src="s-intro.webp" alt="" loading="lazy"></div></div><figcaption>스플래시<span>피키와 첫 인사</span></figcaption></figure>
-      <figure><div class="phone"><div class="scr"><img src="s-persona.webp" alt="" loading="lazy"></div></div><figcaption>준비 성향 선택<span>안정형 · 몰입형</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="s-persona-stable.webp" alt="" loading="lazy"><img class="pf" id="personaAlt" src="s-persona-eff.webp" alt="" loading="lazy"></div></div><figcaption>준비 성향 선택<span>안정형 · 몰입형</span></figcaption></figure>
       <figure><div class="phone"><div class="scr"><img src="s-onb.webp" alt="" loading="lazy"></div></div><figcaption>로드맵 시작<span>갤러리 · 카메라 · 링크</span></figcaption></figure>
       <figure><div class="phone"><div class="scr"><img src="s-empty.webp" alt="" loading="lazy"></div></div><figcaption>첫 홈<span>등록 전 빈 상태</span></figcaption></figure>
       <figure><div class="phone"><div class="scr"><img src="s-menu.webp" alt="" loading="lazy"></div></div><figcaption>+ 메뉴<span>일정 등록 방법</span></figcaption></figure>
-      <figure><div class="phone"><div class="scr"><img src="s-scan2.webp" alt="" loading="lazy"></div></div><figcaption>공고 스캔<span>피키가 내용을 정리 중</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="s-scan-v2.webp" alt="" loading="lazy"></div></div><figcaption>공고 스캔<span>피키가 내용을 정리 중</span></figcaption></figure>
       <figure><div class="phone"><div class="scr"><img src="s-job.webp" alt="" loading="lazy"></div></div><figcaption>공고 확인<span>정보 수정 · 페이스 요약</span></figcaption></figure>
       <figure><div class="phone"><div class="scr"><img src="s-prep-sum-v2.webp" alt="" loading="lazy"></div></div><figcaption>준비 상태 요약<span>로드맵 생성 직전</span></figcaption></figure>
       <figure><div class="phone"><div class="scr"><img src="s-road.webp" alt="" loading="lazy"></div></div><figcaption>AI 페이스 로드맵<span>단계별 D-day</span></figcaption></figure>
@@ -772,6 +772,13 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
   sizeGal();
   addEventListener('resize', sizeGal);
   addEventListener('load', sizeGal);
+
+  /* 화면 둘러보기 · 준비 성향 선택: 안정형/몰입형이 불규칙한 간격으로 번갈아 선택됨 */
+  (function () {
+    var alt = document.getElementById('personaAlt'), on = false;
+    if (!alt || reduce) return;
+    (function flip() { setTimeout(function () { on = !on; alt.classList.toggle('show', on); flip(); }, 1600 + Math.random() * 2000); })();
+  })();
 
   /* CTA: Piki leans toward cursor, bubble reacts to button hover */
   var cta = document.getElementById('cta'), cp = document.getElementById('ctaPiki'), bubble = document.getElementById('ctaBubble'), cbtn = document.getElementById('ctaBtn');
