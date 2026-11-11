@@ -306,6 +306,7 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.12)}
 .pstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:40px}
 .pstat{background:var(--card);border-radius:var(--r-md);padding:30px 12px 26px;text-align:center}
 .pstat b{display:block;font-size:clamp(28px,3.6vw,42px);font-weight:700;color:var(--brand);letter-spacing:-.03em;line-height:1.2;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pstat .approx{font-size:.48em;font-weight:600;margin-right:.18em;vertical-align:.32em;opacity:.85}
 .pstat small{display:block;font-size:14px;color:var(--ink-3);margin-top:6px}
 .plink{margin-top:12px;display:flex;align-items:center;gap:16px;padding:22px 26px;border-radius:var(--r-md);background:var(--brand-soft);color:var(--ink);text-decoration:none;transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
 .plink:hover{transform:translateY(-3px);box-shadow:0 14px 30px -18px rgba(20,60,110,.25)}
@@ -554,7 +555,7 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
       <h2 class="h2">사용자의 목소리로 완성해가는 CareeFit</h2>
       <p class="lead">사용자 조사와 1차 사용성 테스트에서 발견한 문제를 바탕으로 정보구조와 UI를 개선했어요.<br>2026년 12월, 개선된 디자인의 사용성을 다시 검증해요.</p>
       <div class="pstats" id="pstats">
-        <div class="pstat"><b><span data-count="60">60</span>명</b><small>사전 조사</small></div>
+        <div class="pstat"><b><span class="approx">약</span><span data-count="60">60</span>명</b><small>사전 조사</small></div>
         <div class="pstat"><b><span data-count="5">5</span>명</b><small>1차 UT</small></div>
         <div class="pstat"><b>2차 UT</b><small>12월 예정</small></div>
       </div>
