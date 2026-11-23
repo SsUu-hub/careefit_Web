@@ -321,6 +321,66 @@ input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.12)}
 footer{border-top:1px solid var(--line);padding-block:28px 40px;font-size:13px;color:var(--ink-3)}
 footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
 
+/* 준비 성향 테스트: 사이트에 처음 들어오면 화면 전체를 덮는 7문항 테스트 */
+html.quiz-open{overflow:hidden}
+.quiz{position:fixed;inset:0;z-index:90;overflow-y:auto;background:radial-gradient(900px 520px at 50% -8%,var(--brand-soft),transparent 70%),var(--bg);padding:max(16px,env(safe-area-inset-top,0px)) max(20px,env(safe-area-inset-right,0px)) max(24px,env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;transition:opacity .45s ease,visibility .45s}
+.quiz.hide{opacity:0;visibility:hidden;pointer-events:none}
+.q-top{display:flex;justify-content:space-between;align-items:center;max-width:1160px;width:100%;margin:0 auto;height:48px}
+.q-top img{height:26px;width:auto}
+.q-top .logo-d{display:none}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .q-top .logo-l{display:none}:root:not([data-theme="light"]) .q-top .logo-d{display:block}}
+:root[data-theme="dark"] .q-top .logo-l{display:none}:root[data-theme="dark"] .q-top .logo-d{display:block}
+.q-skip{background:none;border:0;font:600 15px/1 var(--sans);color:var(--ink-3);cursor:pointer;padding:10px 12px;border-radius:10px;transition:background .2s,color .2s}
+.q-skip:hover{background:var(--bg-alt);color:var(--ink)}
+.q-body{flex:1;display:flex;align-items:center;justify-content:center;padding-block:24px 8px}
+.q-card{width:min(560px,100%);word-break:keep-all}
+.q-card [tabindex="-1"]:focus{outline:none}
+.q-view{animation:qIn .45s cubic-bezier(.2,.8,.2,1) both}
+.q-view.out{animation:qOut .22s ease both}
+@keyframes qIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes qOut{to{opacity:0;transform:translateY(-12px)}}
+.q-pikis{display:flex;justify-content:center;align-items:flex-end;gap:6px;height:170px;margin-bottom:22px}
+.q-pikis img{width:auto;height:100%;transition:transform .4s cubic-bezier(.3,1.6,.5,1)}
+.q-pikis img:first-child{transform:rotate(-6deg)}
+.q-pikis img:last-child{transform:rotate(6deg)}
+.q-card:hover .q-pikis img:first-child{transform:rotate(-10deg) translateY(-4px)}
+.q-card:hover .q-pikis img:last-child{transform:rotate(10deg) translateY(-4px)}
+.q-card h1{font-size:clamp(32px,5.6vw,48px);font-weight:700;letter-spacing:-.04em;line-height:1.2;text-align:center}
+.q-card h1 .s{color:var(--brand)}.q-card h1 .e{color:var(--fit)}
+.q-card .lead{text-align:center;margin:16px auto 0}
+.q-start{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:32px}
+.q-start .btn{width:min(320px,100%)}
+.q-meta{display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:700;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.q-meta b{color:var(--brand)}
+.q-back{background:none;border:0;font:600 14px/1 var(--sans);color:var(--ink-3);cursor:pointer;padding:8px 0}
+.q-back:hover{color:var(--ink)}.q-back[disabled]{visibility:hidden}
+.q-bar{height:6px;border-radius:6px;background:var(--line);margin-top:12px;overflow:hidden}
+.q-bar i{display:block;height:100%;border-radius:6px;background:var(--brand);transition:width .45s cubic-bezier(.2,.8,.2,1)}
+.q-piki{display:block;width:96px;margin:34px auto 6px}
+.q-q{font-size:clamp(24px,4vw,32px);font-weight:700;letter-spacing:-.035em;line-height:1.35;text-align:center;margin-top:10px}
+.q-opts{display:flex;flex-direction:column;gap:12px;margin-top:32px}
+.q-opt{display:flex;align-items:center;gap:14px;width:100%;text-align:left;font:600 17px/1.45 var(--sans);color:var(--ink);background:var(--card);border:2px solid var(--line);border-radius:var(--r-md);padding:20px 22px;cursor:pointer;transition:border-color .2s,background .2s,transform .2s,box-shadow .2s}
+.q-opt:hover{border-color:var(--brand);transform:translateY(-2px);box-shadow:0 14px 28px -20px rgba(20,60,110,.4)}
+.q-opt .k{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--bg-alt);color:var(--ink-3);font-size:14px;font-weight:700;transition:background .2s,color .2s}
+.q-opt:hover .k,.q-opt.pick .k{background:var(--brand);color:#fff}
+.q-opt.pick{border-color:var(--brand);background:var(--brand-soft)}
+.q-res{text-align:center}
+.q-res .tag{display:inline-block;font-size:14px;font-weight:700;color:var(--acc);background:color-mix(in srgb,var(--acc) 14%,transparent);border-radius:999px;padding:6px 14px}
+.q-res img{display:block;width:170px;margin:18px auto 8px;animation:qPop .6s cubic-bezier(.3,1.6,.5,1) both .1s}
+@keyframes qPop{from{transform:scale(.6) rotate(-8deg);opacity:0}to{transform:none;opacity:1}}
+.q-res h1 b{color:var(--acc)}
+.q-res .lead{max-width:30em}
+.q-score{margin:28px auto 0;max-width:420px;text-align:left}
+.q-score .row{display:flex;justify-content:space-between;font-size:14px;font-weight:700;color:var(--ink-2)}
+.q-score .row span:first-child{color:var(--brand)}.q-score .row span:last-child{color:var(--fit)}
+.q-score .track{display:flex;height:10px;border-radius:10px;overflow:hidden;margin-top:8px;background:var(--line)}
+.q-score .track i{display:block;height:100%;transition:width .8s cubic-bezier(.2,.8,.2,1) .2s}
+.q-chips{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:22px}
+.q-chips span{font-size:14px;font-weight:600;color:var(--ink-2);background:var(--bg-alt);border-radius:10px;padding:8px 12px}
+.q-res .q-start{flex-direction:row;justify-content:center;flex-wrap:wrap}
+.q-res .q-start .btn{width:auto}
+@media (max-width:480px){.q-pikis{height:130px}.q-opt{padding:16px;font-size:16px}.q-res .q-start .btn{width:100%}}
+@media (prefers-reduced-motion: reduce){.q-view,.q-view.out,.q-res img{animation:none}}
 .reveal{opacity:1;transform:none;transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
 .js .reveal.pre{opacity:0;transform:translateY(28px)}
 @media (prefers-reduced-motion: reduce){
@@ -332,6 +392,14 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
 </head>
 <body>
 
+<div class="quiz" id="quiz" role="dialog" aria-modal="true" aria-labelledby="quizTitle">
+  <div class="q-top">
+    <span><img class="logo-l" src="logo.png" alt="Caree Fit" width="121" height="28"><img class="logo-d" src="logo-dark.png" alt="Caree Fit" width="121" height="28"></span>
+    <button type="button" class="q-skip" id="quizSkip">건너뛰기 →</button>
+  </div>
+  <div class="q-body"><div class="q-card" id="quizCard" aria-live="polite"></div></div>
+</div>
+
 <header class="nav gutter" id="nav">
   <div class="container">
     <a class="brand" href="#top" aria-label="CareeFit 처음으로"><img class="logo-l" src="logo.png" alt="Caree Fit" width="121" height="28"><img class="logo-d" src="logo-dark.png" alt="Caree Fit" width="121" height="28"></a>
@@ -340,6 +408,7 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
       <a class="l" href="#pace">페이스</a>
       <a class="l" href="#features">기능</a>
       <a class="l" href="#screens">화면</a>
+      <a class="l" href="#quiz" data-quiz>성향 테스트</a>
       <a class="btn btn-primary btn-sm magnetic" href="https://ssuu-hub.github.io/careefit_APP/"><span>체험하기</span></a>
     </nav>
   </div>
@@ -589,6 +658,93 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
     '</span></span><span class="isl" aria-hidden="true"></span><span class="home" aria-hidden="true"></span>';
   document.querySelectorAll('.phone').forEach(function (p) { p.insertAdjacentHTML('beforeend', SB); });
 
+  /* 준비 성향 테스트 (안정형 · 몰입형): 7문항, 답마다 s(안정형) 또는 e(몰입형) 1점 */
+  (function quiz() {
+    var Q = [
+      ['마감까지 2주 남은 과제가 생겼어요.<br>나는?', ['오늘 바로 일정부터 나눠 세워요', 's'], ['일단 두고, 감이 올 때 몰아서 해요', 'e']],
+      ['자기소개서를 쓸 때 나는?', ['마감 직전 몰입해서 한 번에 완성해요', 'e'], ['초안을 일찍 써두고 여러 번 고쳐요', 's']],
+      ['시험 기간, 나의 공부 방식은?', ['범위를 나눠서 매일 조금씩 해요', 's'], ['직전에 몰아서 집중력을 끌어올려요', 'e']],
+      ['갑자기 다른 일정이 끼어들었어요.', ['밤을 새서라도 결국 해내요', 'e'], ['미리 해둔 덕분에 여유 있게 넘겨요', 's']],
+      ['마감 하루 전, 나의 모습은?', ['이미 끝내고 최종 점검 중이에요', 's'], ['지금부터가 진짜 시작이에요', 'e']],
+      ['일이 가장 잘 되는 순간은?', ['시간이 촉박해 긴장감이 올라올 때', 'e'], ['계획대로 하나씩 체크해 나갈 때', 's']],
+      ['할 일 목록을 대하는 나는?', ['마감일과 순서까지 꼼꼼히 정리해요', 's'], ['머릿속으로 그려두고 바로 시작해요', 'e']]
+    ];
+    var RES = {
+      s: { name: '안정형', acc: 'var(--brand)', img: 'piki-stable.webp', buf: '마감 3일 전',
+        desc: '미리 준비해서 마감 3일 전에는 끝내고 싶은 타입이에요.<br>피키가 준비 기간을 여유 있게 나누고,<br>마감 3일 전을 최종 목표로 잡아 드려요.',
+        chips: ['#계획형', '#꾸준함', '#마감 버퍼 3일'] },
+      e: { name: '몰입형', acc: 'var(--fit)', img: 'piki-eff.webp', buf: '마감 1일 전',
+        desc: '마감이 다가올수록 집중력이 폭발하는 타입이에요.<br>피키가 일정을 몰입하는 구간에 모아,<br>짧고 굵게 끝낼 수 있게 짜 드려요.',
+        chips: ['#몰입형', '#순발력', '#마감 버퍼 1일'] }
+    };
+    var root = document.documentElement, box = document.getElementById('quiz'), card = document.getElementById('quizCard');
+    var ans = [], step = -1;
+    function swap(html, focusSel) {
+      var cur = card.firstElementChild;
+      var put = function () {
+        card.innerHTML = '<div class="q-view">' + html + '</div>';
+        var f = focusSel && card.querySelector(focusSel); if (f) f.focus({ preventScroll: true });
+      };
+      if (cur && !reduce) { cur.classList.add('out'); setTimeout(put, 200); } else put();
+    }
+    function intro() {
+      step = -1; ans = [];
+      swap('<div class="q-pikis" aria-hidden="true"><img src="piki-stable.webp" alt=""><img src="piki-eff.webp" alt=""></div>' +
+        '<h1 id="quizTitle" tabindex="-1">나는 <span class="s">안정형</span>일까,<br><span class="e">몰입형</span>일까?</h1>' +
+        '<p class="lead">7개의 질문에 답하면 피키가 나에게 맞는<br>준비 페이스를 알려드려요. 1분이면 충분해요.</p>' +
+        '<div class="q-start"><button type="button" class="btn btn-primary" id="qGo"><span>테스트 시작하기</span></button></div>', '#quizTitle');
+    }
+    function ask(i) {
+      step = i; var q = Q[i];
+      swap('<div class="q-meta"><button type="button" class="q-back" id="qBack"' + (i === 0 ? ' disabled' : '') + '>← 이전</button><span><b>' + (i + 1) + '</b> / ' + Q.length + '</span></div>' +
+        '<div class="q-bar" aria-hidden="true"><i style="width:' + (i / Q.length * 100) + '%"></i></div>' +
+        '<img class="q-piki" src="piki.webp" alt="">' +
+        '<h2 class="q-q" id="quizTitle" tabindex="-1">' + q[0] + '</h2>' +
+        '<div class="q-opts">' + [q[1], q[2]].map(function (o, k) {
+          return '<button type="button" class="q-opt' + (ans[i] === o[1] ? ' pick' : '') + '" data-v="' + o[1] + '"><span class="k">' + 'AB'[k] + '</span><span>' + o[0] + '</span></button>';
+        }).join('') + '</div>', '#quizTitle');
+      setTimeout(function () { var bar = card.querySelector('.q-bar i'); if (bar) bar.style.width = ((i + 1) / Q.length * 100) + '%'; }, reduce ? 0 : 260);
+    }
+    function result() {
+      var s = ans.filter(function (a) { return a === 's'; }).length, e = Q.length - s, t = s > e ? 's' : 'e', R = RES[t];
+      step = Q.length;
+      swap('<div class="q-res" style="--acc:' + R.acc + '">' +
+        '<span class="tag">나의 준비 성향</span>' +
+        '<img src="' + R.img + '" alt="' + R.name + ' 피키">' +
+        '<h1 id="quizTitle" tabindex="-1">나는 <b>' + R.name + '</b>이에요</h1>' +
+        '<p class="lead">' + R.desc + '</p>' +
+        '<div class="q-score" aria-label="안정형 ' + s + '개, 몰입형 ' + e + '개"><div class="row"><span>안정형 ' + s + '</span><span>몰입형 ' + e + '</span></div>' +
+        '<div class="track"><i style="width:0;background:var(--brand)"></i><i style="width:0;background:var(--fit)"></i></div></div>' +
+        '<div class="q-chips">' + R.chips.map(function (c) { return '<span>' + c + '</span>'; }).join('') + '</div>' +
+        '<div class="q-start"><button type="button" class="btn btn-primary" id="qDone" data-t="' + t + '"><span>내 페이스로 CareeFit 보기</span></button>' +
+        '<button type="button" class="btn btn-ghost" id="qAgain"><span>다시 테스트하기</span></button></div></div>', '#quizTitle');
+      setTimeout(function () { var bars = card.querySelectorAll('.q-score .track i'); if (bars.length) { bars[0].style.width = (s / Q.length * 100) + '%'; bars[1].style.width = (e / Q.length * 100) + '%'; } }, reduce ? 0 : 320);
+    }
+    function close(type) {
+      box.classList.add('hide'); root.classList.remove('quiz-open');
+      if (type) { var c = document.querySelector('.pcard[data-p="' + (type === 's' ? 'stable' : 'eff') + '"]'); if (c) c.click(); }
+      scrollTo({ top: 0, behavior: 'auto' });
+    }
+    function open() { box.classList.remove('hide'); root.classList.add('quiz-open'); intro(); }
+    card.addEventListener('click', function (ev) {
+      var o = ev.target.closest('.q-opt');
+      if (o) {
+        if (card.querySelector('.q-view.out')) return;
+        ans[step] = o.getAttribute('data-v'); o.classList.add('pick');
+        setTimeout(function () { step + 1 < Q.length ? ask(step + 1) : result(); }, reduce ? 0 : 260);
+        return;
+      }
+      if (ev.target.closest('#qGo')) ask(0);
+      else if (ev.target.closest('#qBack') && step > 0) ask(step - 1);
+      else if (ev.target.closest('#qAgain')) ask(0);
+      else if (ev.target.closest('#qDone')) close(ev.target.closest('#qDone').getAttribute('data-t'));
+    });
+    document.getElementById('quizSkip').addEventListener('click', function () { close(); });
+    addEventListener('keydown', function (e) { if (e.key === 'Escape' && !box.classList.contains('hide')) close(); });
+    document.querySelectorAll('[data-quiz]').forEach(function (b) { b.addEventListener('click', function (e) { e.preventDefault(); open(); }); });
+    root.classList.add('quiz-open'); intro();
+  })();
+
   /* nav */
   var nav = document.getElementById('nav');
   var onNav = function () { nav.classList.toggle('scrolled', scrollY > 8); };
@@ -821,7 +977,7 @@ footer .container{display:flex;justify-content:space-between;gap:12px;flex-wrap:
     var jump = function (y) { scrollTo({ top: y, behavior: 'instant' }); };
     function stop() { if (raf) cancelAnimationFrame(raf); raf = null; mode = 'off'; }
     function arm() { clearTimeout(idleTimer); idleTimer = setTimeout(start, IDLE_MS); }
-    function start() { mode = 'down'; pos = scrollY; last = performance.now(); raf = requestAnimationFrame(tick); }
+    function start() { if (document.documentElement.classList.contains('quiz-open')) { arm(); return; } mode = 'down'; pos = scrollY; last = performance.now(); raf = requestAnimationFrame(tick); }
     function tick(t) {
       var dt = Math.min(64, t - last); last = t;
       if (mode === 'down') {
