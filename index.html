@@ -187,6 +187,8 @@ section{position:relative}
 .pick{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .pcard{position:relative;text-align:left;font-family:inherit;color:inherit;cursor:pointer;background:var(--card);border:2px solid transparent;border-radius:var(--r-md);padding:20px 20px 20px 20px;display:flex;gap:14px;align-items:center;transition:border-color .25s,transform .25s,box-shadow .25s}
 .pcard:hover{transform:translateY(-3px);box-shadow:0 14px 30px -18px rgba(20,60,110,.35)}
+.pcard.tap{animation:pTap .45s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pTap{40%{transform:scale(.965)}100%{transform:none}}
 .pcard img{width:64px;height:auto;flex:none;transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
 .pcard:hover img{transform:rotate(-6deg) scale(1.08)}
 .pcard .t{display:block;font-size:20px;font-weight:700;letter-spacing:-.03em}
@@ -197,7 +199,7 @@ section{position:relative}
 .tl-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
 .tl-head b{font-size:18px;letter-spacing:-.03em}
 .tl-head span{font-size:13px;color:var(--ink-3)}
-.track{position:relative;height:150px;margin:20px 8px 8px}
+.track{position:relative;height:150px;margin:20px 52px 8px 8px}
 .track .rail{position:absolute;left:0;right:0;top:75px;height:4px;border-radius:4px;background:var(--line)}
 .track .fill{position:absolute;top:75px;height:4px;border-radius:4px;background:var(--acc,var(--brand));transition:left .5s cubic-bezier(.2,.8,.2,1),width .5s cubic-bezier(.2,.8,.2,1),background .3s}
 .ms{position:absolute;top:69px;transform:translateX(-50%);transition:left .5s cubic-bezier(.2,.8,.2,1)}
@@ -208,8 +210,9 @@ section{position:relative}
 .ms.dn .lab{top:28px}
 .ms.goal i{width:22px;height:22px;margin:-3px;background:var(--acc,var(--brand))}
 .ms.goal .lab b{color:var(--ink)}
-.end{position:absolute;right:-8px;top:62px;font-size:12px;font-weight:700;color:var(--ink-3);text-align:right}
-.end::before{content:"";display:block;width:2px;height:30px;background:var(--ink-3);margin:0 0 0 auto;opacity:.5}
+/* 마감 표시: 선 그래프 끝에 세로 눈금, 글씨는 그래프 바깥 오른쪽에 둬서 마지막 단계 점·글씨와 겹치지 않게 */
+.end{position:absolute;left:calc(100% + 14px);top:66px;font-size:13px;font-weight:700;line-height:22px;color:var(--ink-3);white-space:nowrap}
+.end::before{content:"";position:absolute;left:-14px;top:-4px;width:2px;height:30px;border-radius:2px;background:var(--ink-3);opacity:.5}
 .buffer{display:flex;align-items:center;gap:16px;margin-top:22px;flex-wrap:wrap}
 .buffer label{font-size:15px;font-weight:700;white-space:nowrap}
 .buffer output{font-size:15px;font-weight:700;color:var(--acc,var(--brand));min-width:76px}
@@ -1135,6 +1138,21 @@ html.gb-open{overflow:hidden}
   document.querySelectorAll('.pcard').forEach(function (c) {
     c.addEventListener('click', function () { persona = c.getAttribute('data-p'); buf = PLAN[persona].buf; range.value = buf; renderPlan(); });
   });
+  /* 스크롤에 따라 안정형 → 몰입형 → 안정형 → 몰입형이 번갈아 눌림 (구간이 바뀔 때만 바뀌어서, 직접 고른 성향은 다음 구간 전까지 유지) */
+  var paceSec = document.getElementById('pace'), paceZone = -1;
+  function onPace() {
+    var r = paceSec.getBoundingClientRect(), p = (innerHeight * 0.55 - r.top) / r.height;
+    if (p < 0 || p > 1) { paceZone = -1; return; }
+    var z = p < 0.3 ? 0 : p < 0.5 ? 1 : p < 0.7 ? 2 : 3;
+    if (z === paceZone) return;
+    var first = paceZone === -1; paceZone = z;
+    var want = z % 2 ? 'eff' : 'stable';
+    if (first && want === persona) return;
+    var c = document.querySelector('.pcard[data-p="' + want + '"]');
+    if (!c || want === persona) return;
+    persona = want; buf = PLAN[persona].buf; range.value = buf; renderPlan();
+    if (!reduce) { c.classList.remove('tap'); void c.offsetWidth; c.classList.add('tap'); }
+  }
   range.addEventListener('input', function () { buf = +range.value; renderPlan(); });
   renderPlan();
   var pStage = document.querySelector('.persona-stage'), pk = document.getElementById('personaPiki');
@@ -1250,7 +1268,7 @@ html.gb-open{overflow:hidden}
 
   /* scroll loop */
   var ticking = false;
-  function onScroll() { if (ticking) return; ticking = true; requestAnimationFrame(function () { ticking = false; onStmt(); onStory(); onGal(); }); }
+  function onScroll() { if (ticking) return; ticking = true; requestAnimationFrame(function () { ticking = false; onStmt(); onStory(); onGal(); onPace(); }); }
   addEventListener('scroll', onScroll, { passive: true });
   addEventListener('resize', onScroll);
   onStmt(); onStory();
