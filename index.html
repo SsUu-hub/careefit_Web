@@ -381,6 +381,53 @@ html.quiz-open{overflow:hidden}
 .q-res .q-start .btn{width:auto}
 @media (max-width:480px){.q-pikis{height:130px}.q-opt{padding:16px;font-size:16px}.q-res .q-start .btn{width:100%}}
 @media (prefers-reduced-motion: reduce){.q-view,.q-view.out,.q-res img{animation:none}}
+/* 방명록: 우측 하단 플로팅 버튼 + 모달 (Google Apps Script 연동) */
+.gb-fab{position:fixed;z-index:70;right:max(20px,calc(env(safe-area-inset-right,0px) + 16px));bottom:calc(20px + env(safe-area-inset-bottom,0px));display:inline-flex;align-items:center;gap:6px;border:0;cursor:pointer;font:700 15px/1 var(--sans);letter-spacing:-.01em;color:var(--on-brand);background:var(--brand);padding:14px 20px;border-radius:16px;box-shadow:0 14px 30px -12px rgba(20,60,110,.45),0 4px 10px -4px rgba(20,60,110,.25);transition:background .2s,transform .25s cubic-bezier(.2,.8,.2,1),opacity .3s,visibility .3s}
+.gb-fab:hover{background:var(--brand-strong);transform:translateY(-3px)}
+.gb-fab .ar{display:inline-block;transition:transform .25s}
+.gb-fab:hover .ar{transform:translateX(3px)}
+html.quiz-open .gb-fab,html.gb-open .gb-fab{opacity:0;visibility:hidden;pointer-events:none}
+@media (max-width:480px){.gb-fab{font-size:14px;padding:12px 16px;border-radius:14px}}
+footer{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))!important}
+html.gb-open{overflow:hidden}
+.gb{position:fixed;inset:0;z-index:95;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(10,22,36,.48);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s}
+.gb.open{opacity:1;visibility:visible}
+.gb-panel{position:relative;width:min(520px,100%);max-height:min(860px,calc(100svh - 40px));overflow-y:auto;overscroll-behavior:contain;background:var(--bg);color:var(--ink);border-radius:var(--r-lg);padding:28px 28px 24px;box-shadow:0 40px 80px -30px rgba(0,0,0,.45);transform:translateY(16px) scale(.98);transition:transform .35s cubic-bezier(.2,.8,.2,1);word-break:keep-all}
+.gb.open .gb-panel{transform:none}
+.gb-panel .eyebrow{margin-bottom:6px}
+.gb-panel h2{font-size:26px;font-weight:700;letter-spacing:-.035em}
+.gb-sub{font-size:14px;color:var(--ink-3);margin-top:6px}
+.gb-x{position:absolute;top:18px;right:18px;width:40px;height:40px;border:0;border-radius:12px;background:var(--bg-alt);color:var(--ink-2);cursor:pointer;display:grid;place-items:center;transition:background .2s,color .2s}
+.gb-x:hover{background:var(--line);color:var(--ink)}
+.gb-form{display:flex;flex-direction:column;gap:14px;margin-top:22px}
+.gb-field label{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;font-weight:700;color:var(--ink-2);margin-bottom:6px}
+.gb-field label small{font-size:12px;font-weight:600;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.gb-field input,.gb-field textarea{display:block;width:100%;font:500 16px/1.5 var(--sans);color:var(--ink);background:var(--bg-alt);border:2px solid transparent;border-radius:14px;padding:12px 14px;transition:border-color .2s,background .2s;resize:none}
+.gb-field textarea{min-height:104px}
+.gb-field input:focus,.gb-field textarea:focus{outline:none;border-color:var(--brand);background:var(--card)}
+.gb-field input::placeholder,.gb-field textarea::placeholder{color:var(--ink-3)}
+.gb-submit{width:100%;font-size:16px;padding:15px 20px}
+.gb-submit[disabled]{opacity:.55;cursor:default}
+.gb-msg{min-height:20px;font-size:14px;font-weight:600;line-height:1.45}
+.gb-msg.ok{color:var(--brand)}.gb-msg.err{color:#e5484d}
+.gb-list-head{display:flex;justify-content:space-between;align-items:baseline;margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
+.gb-list-head b{font-size:17px;letter-spacing:-.02em}
+.gb-list-head span{font-size:13px;color:var(--ink-3);font-weight:600}
+.gb-list{list-style:none;margin:14px 0 0;padding:0;display:flex;flex-direction:column;gap:10px}
+.gb-item{background:var(--bg-alt);border-radius:var(--r-md);padding:14px 16px}
+.gb-item .who{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.gb-item .who b{font-size:15px;font-weight:700;overflow-wrap:anywhere}
+.gb-item .who time{flex:none;font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.gb-item p{margin-top:4px;font-size:15px;line-height:1.55;color:var(--ink-2);white-space:pre-wrap;overflow-wrap:anywhere}
+.gb-state{text-align:center;padding:22px 10px 8px;font-size:14px;color:var(--ink-3);line-height:1.5}
+.gb-state img{width:56px;margin:0 auto 8px}
+.gb-state button{margin-top:10px;border:0;background:var(--bg-alt);color:var(--ink);font:600 14px/1 var(--sans);padding:10px 14px;border-radius:10px;cursor:pointer}
+@media (max-width:560px){
+  .gb{align-items:flex-end;padding:0}
+  .gb-panel{width:100%;max-height:calc(100svh - 24px);border-radius:24px 24px 0 0;padding:24px 20px calc(20px + env(safe-area-inset-bottom,0px));transform:translateY(40px)}
+  .gb-x{top:14px;right:14px}
+}
+@media (prefers-reduced-motion: reduce){.gb,.gb-panel{transition:none}}
 .reveal{opacity:1;transform:none;transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
 .js .reveal.pre{opacity:0;transform:translateY(28px)}
 @media (prefers-reduced-motion: reduce){
@@ -641,6 +688,34 @@ html.quiz-open{overflow:hidden}
   <div class="container"><span>© 2026 CareeFit</span><span>Designer · JUNGSUHYUN</span></div>
 </footer>
 
+<button type="button" class="gb-fab" id="gbFab" aria-haspopup="dialog" aria-controls="gb">방명록 작성하기 <span class="ar" aria-hidden="true">→</span></button>
+
+<div class="gb" id="gb" role="dialog" aria-modal="true" aria-labelledby="gbTitle" aria-hidden="true">
+  <div class="gb-panel" id="gbPanel">
+    <button type="button" class="gb-x" id="gbClose" aria-label="방명록 닫기"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <span class="eyebrow">방명록</span>
+    <h2 id="gbTitle">CareeFit에게 한마디</h2>
+    <p class="gb-sub">남겨 주신 글은 확인 후 방명록에 공개돼요.</p>
+    <form class="gb-form" id="gbForm" novalidate>
+      <div class="gb-field">
+        <label for="gbName">이름 <small id="gbNameCount">0/20</small></label>
+        <input id="gbName" name="name" type="text" maxlength="20" autocomplete="nickname" placeholder="이름 또는 닉네임" required>
+      </div>
+      <div class="gb-field">
+        <label for="gbText">한마디 <small id="gbTextCount">0/200</small></label>
+        <textarea id="gbText" name="message" maxlength="200" rows="4" placeholder="CareeFit에 대한 생각이나 응원을 남겨 주세요" required></textarea>
+      </div>
+      <p class="gb-msg" id="gbMsg" role="status" aria-live="polite"></p>
+      <button type="submit" class="btn btn-primary gb-submit" id="gbSubmit">등록하기</button>
+    </form>
+    <div class="gb-list-head"><b>방명록</b><span id="gbCount"></span></div>
+    <ul class="gb-list" id="gbList" aria-live="polite"></ul>
+    <div class="gb-state" id="gbState"></div>
+  </div>
+</div>
+<span hidden id="gbPikiSrc" data-src="piki-rec.webp"></span>
+
+
 
 <script>
 (function () {
@@ -743,6 +818,139 @@ html.quiz-open{overflow:hidden}
     addEventListener('keydown', function (e) { if (e.key === 'Escape' && !box.classList.contains('hide')) close(); });
     document.querySelectorAll('[data-quiz]').forEach(function (b) { b.addEventListener('click', function (e) { e.preventDefault(); open(); }); });
     root.classList.add('quiz-open'); intro();
+  })();
+
+  /* 방명록: 플로팅 버튼 → 모달. 등록은 Apps Script에 POST(no-cors), 목록은 JSONP로 불러옴 */
+  (function guestbook() {
+    var GB_URL = 'https://script.google.com/macros/s/AKfycbxllX58c86fSUAWJ5uUaHgJol89qjlRLDPzXPXjZDWT00lMfVZ-Ok3LUVROsKdjH_04/exec';
+    var root = document.documentElement, fab = document.getElementById('gbFab'), gb = document.getElementById('gb'), panel = document.getElementById('gbPanel');
+    var form = document.getElementById('gbForm'), nameEl = document.getElementById('gbName'), textEl = document.getElementById('gbText');
+    var msg = document.getElementById('gbMsg'), btn = document.getElementById('gbSubmit');
+    var list = document.getElementById('gbList'), state = document.getElementById('gbState'), countEl = document.getElementById('gbCount');
+    var pikiSrc = document.getElementById('gbPikiSrc').getAttribute('data-src');
+    if (!fab || !gb) return;
+    var lastFocus = null, sending = false, loading = false;
+
+    function setMsg(t, kind) { msg.textContent = t || ''; msg.className = 'gb-msg' + (kind ? ' ' + kind : ''); }
+    function counts() {
+      document.getElementById('gbNameCount').textContent = nameEl.value.length + '/20';
+      document.getElementById('gbTextCount').textContent = textEl.value.length + '/200';
+    }
+    nameEl.addEventListener('input', function () { if (nameEl.value.length > 20) nameEl.value = nameEl.value.slice(0, 20); counts(); });
+    textEl.addEventListener('input', function () { if (textEl.value.length > 200) textEl.value = textEl.value.slice(0, 200); counts(); });
+
+    function open() {
+      lastFocus = document.activeElement;
+      gb.classList.add('open'); gb.setAttribute('aria-hidden', 'false'); root.classList.add('gb-open');
+      setTimeout(function () { nameEl.focus({ preventScroll: true }); }, 60);
+      loadList();
+    }
+    function close() {
+      gb.classList.remove('open'); gb.setAttribute('aria-hidden', 'true'); root.classList.remove('gb-open');
+      if (lastFocus && lastFocus.focus) lastFocus.focus({ preventScroll: true });
+    }
+    fab.addEventListener('click', open);
+    document.getElementById('gbClose').addEventListener('click', close);
+    // 모달 바깥(어두운 배경)을 누르면 닫힘. 입력하던 내용은 그대로 남아 다시 열면 이어서 쓸 수 있음
+    gb.addEventListener('mousedown', function (e) { if (e.target === gb) close(); });
+    addEventListener('keydown', function (e) {
+      if (!gb.classList.contains('open')) return;
+      if (e.key === 'Escape') { e.stopPropagation(); close(); return; }
+      if (e.key === 'Tab') {   // 모달 안에서만 포커스가 돌도록
+        var f = [].slice.call(panel.querySelectorAll('button:not([disabled]),input,textarea')).filter(function (x) { return x.offsetParent !== null; });
+        if (!f.length) return;
+        var first = f[0], last = f[f.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    }, true);
+
+    // 등록: URLSearchParams 형식 POST. Apps Script는 CORS 응답을 주지 않아 no-cors로 보내며, 응답 내용은 확인할 수 없음
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (sending) return;
+      var name = nameEl.value.trim().slice(0, 20), text = textEl.value.trim().slice(0, 200);
+      if (!name || !text) {
+        setMsg('이름과 한마디를 모두 입력해 주세요.', 'err');
+        (name ? textEl : nameEl).focus();
+        return;
+      }
+      sending = true; btn.disabled = true; btn.textContent = '보내는 중…'; setMsg('');
+      fetch(GB_URL, { method: 'POST', mode: 'no-cors', body: new URLSearchParams({ name: name, message: text }) })
+        .then(function () {
+          setMsg('메시지를 보냈어요. 확인 후 방명록에 표시됩니다.', 'ok');
+          textEl.value = ''; counts();
+        })
+        .catch(function () { setMsg('메시지를 보내지 못했어요. 인터넷 연결을 확인하고 다시 시도해 주세요.', 'err'); })
+        .then(function () {
+          setTimeout(function () { sending = false; btn.disabled = false; btn.textContent = '등록하기'; }, 1500);   // 연속 제출 방지
+        });
+    });
+
+    // 목록: JSONP. 이름·한마디는 textContent로만 넣어 HTML로 해석되지 않게 함
+    function fmtDate(v) {
+      if (v == null || v === '') return '';
+      var d = new Date(v);
+      if (isNaN(d)) return String(v).slice(0, 20);
+      var p = function (n) { return (n < 10 ? '0' : '') + n; };
+      return d.getFullYear() + '.' + p(d.getMonth() + 1) + '.' + p(d.getDate());
+    }
+    function showState(kind) {
+      state.textContent = '';
+      if (!kind) { state.hidden = true; return; }
+      state.hidden = false;
+      if (kind === 'loading') { state.textContent = '방명록을 불러오는 중이에요…'; return; }
+      var img = document.createElement('img'); img.src = pikiSrc; img.alt = ''; state.appendChild(img);
+      var p = document.createElement('p');
+      p.textContent = kind === 'empty' ? '아직 공개된 한마디가 없어요. 첫 번째 한마디를 남겨 주세요!' : '방명록을 불러오지 못했어요. 잠시 후 다시 시도해 주세요.';
+      state.appendChild(p);
+      if (kind === 'error') {
+        var b = document.createElement('button'); b.type = 'button'; b.textContent = '다시 불러오기';
+        b.addEventListener('click', loadList); state.appendChild(b);
+      }
+    }
+    function render(entries) {
+      list.textContent = '';
+      var items = entries.map(function (x) {
+        x = x || {};
+        return { name: String(x.name == null ? '' : x.name).slice(0, 20), text: String(x.message == null ? '' : x.message).slice(0, 200),
+          date: x.date || x.timestamp || x.createdAt || x.time || '' };
+      }).filter(function (x) { return x.name.trim() && x.text.trim(); });
+      if (items.length > 1 && items.every(function (x) { return x.date && !isNaN(new Date(x.date)); })) {
+        items.sort(function (a, b) { return new Date(b.date) - new Date(a.date); });   // 최신 글이 위로
+      }
+      countEl.textContent = items.length ? items.length + '개' : '';
+      if (!items.length) { showState('empty'); return; }
+      showState(null);
+      items.forEach(function (x) {
+        var li = document.createElement('li'); li.className = 'gb-item';
+        var who = document.createElement('div'); who.className = 'who';
+        var b = document.createElement('b'); b.textContent = x.name; who.appendChild(b);
+        var ds = fmtDate(x.date);
+        if (ds) { var t = document.createElement('time'); t.textContent = ds; who.appendChild(t); }
+        var p = document.createElement('p'); p.textContent = x.text;
+        li.appendChild(who); li.appendChild(p); list.appendChild(li);
+      });
+    }
+    function loadList() {
+      if (loading) return;
+      loading = true;
+      if (!list.children.length) showState('loading');
+      var cb = '__careefitGb' + Date.now(), s = document.createElement('script'), done = false;
+      var finish = function () { done = true; loading = false; clearTimeout(timer); try { delete window[cb]; } catch (_) { window[cb] = undefined; } if (s.parentNode) s.parentNode.removeChild(s); };
+      var timer = setTimeout(function () { if (done) return; finish(); if (!list.children.length) showState('error'); }, 10000);
+      window[cb] = function (data) {
+        if (done) return; finish();
+        try {
+          var entries = Array.isArray(data) ? data : (data && Array.isArray(data.entries) ? data.entries : []);
+          render(entries);
+        } catch (_) { if (!list.children.length) showState('error'); }
+      };
+      s.onerror = function () { if (done) return; finish(); if (!list.children.length) showState('error'); };
+      s.src = GB_URL + '?callback=' + cb + '&t=' + Date.now();
+      document.body.appendChild(s);
+    }
+    counts();
   })();
 
   /* nav */
@@ -977,7 +1185,7 @@ html.quiz-open{overflow:hidden}
     var jump = function (y) { scrollTo({ top: y, behavior: 'instant' }); };
     function stop() { if (raf) cancelAnimationFrame(raf); raf = null; mode = 'off'; }
     function arm() { clearTimeout(idleTimer); idleTimer = setTimeout(start, IDLE_MS); }
-    function start() { if (document.documentElement.classList.contains('quiz-open')) { arm(); return; } mode = 'down'; pos = scrollY; last = performance.now(); raf = requestAnimationFrame(tick); }
+    function start() { if (document.documentElement.classList.contains('quiz-open') || document.documentElement.classList.contains('gb-open')) { arm(); return; } mode = 'down'; pos = scrollY; last = performance.now(); raf = requestAnimationFrame(tick); }
     function tick(t) {
       var dt = Math.min(64, t - last); last = t;
       if (mode === 'down') {
