@@ -166,6 +166,7 @@ section{position:relative}
 .road-nav{position:absolute;inset:0;z-index:1;pointer-events:none;transition:opacity .4s ease}
 .story-stage .road-nav{opacity:0}
 .phone .scr .road-nav img.ngb,.story-stage .scr .road-nav img.ngb{inset:auto;left:2.736%;bottom:5.034%;width:94.53%;height:auto;opacity:1;transform:none;transition:none}
+.phone .scr .road-nav img.rb,.story-stage .scr .road-nav img.rb{inset:auto;left:0;bottom:0;width:100%;height:auto;opacity:1;transform:none;transition:none}
 .road-nav .band{position:absolute;left:0;right:0;bottom:0;height:5.034%;background:#fdfdfd}
 .road-nav::before{content:"";position:absolute;left:0;right:0;top:0;height:5.6%;background:#fdfdfd}
 .m-shot .scr img.tall{animation:roadscroll 8s ease-in-out infinite}
@@ -485,7 +486,7 @@ html.gb-open{overflow:hidden}
       </div>
       <div class="hero-stage" id="heroStage" aria-label="CareeFit 홈 화면">
         <div class="hero-phone" id="heroPhone" data-depth="1">
-          <div class="phone"><div class="scr"><img src="s-home.webp" alt="CareeFit 홈: 접수 D-39 서비스 기획 인턴, 오늘의 할 일, 접수마감 로드맵" width="600" height="1305"></div></div>
+          <div class="phone"><div class="scr"><img src="s-home-v2.webp" alt="CareeFit 홈: 접수 D-39 서비스 기획 인턴, 오늘의 할 일, 접수마감 로드맵" width="600" height="1305"></div></div>
         </div>
         <div class="float f1" data-depth="2.2"><span class="dpill">접수 D-39</span><div class="k">NOVABYTE · 서울</div><div class="v">서비스 기획 인턴</div></div>
         <div class="float f2 ring" data-depth="1.6">
@@ -515,7 +516,7 @@ html.gb-open{overflow:hidden}
           <li><button class="step on" type="button" data-i="0"><span class="bar"></span><span class="t"><span class="no">01</span>공고를 올려요</span><span class="d">촬영하기, 갤러리, 링크 중 편한 방법으로 올리면 피키가 지원 자격과 마감일,<br>채용 절차를 꼼꼼히 읽어요.</span><span class="m-shot phone"><span class="scr"><img src="s-scan1.webp" alt="" loading="lazy"><span class="scan-spin" aria-hidden="true"></span></span></span></button></li>
           <li><button class="step" type="button" data-i="1"><span class="bar"></span><span class="t"><span class="no">02</span>정리된 공고를 확인해요</span><span class="d">회사, 직무, 마감일, 내 작업 페이스까지 한 장으로 보여줘요.<br>틀린 곳은 그 자리에서 고칠 수 있어요.</span><span class="m-shot phone"><span class="scr" id="mJob"><img src="s-job-view.webp" alt="" loading="lazy"><img class="pf jf jf-edit" src="s-job-edit.webp" alt="" loading="lazy"><span class="job-type" aria-hidden="true"><span class="tx">2027.01.20</span><span class="cr"></span></span><img class="pf jf jf-saved" src="s-job-saved.webp" alt="" loading="lazy"></span></span></button></li>
           <li><button class="step" type="button" data-i="2"><span class="bar"></span><span class="t"><span class="no">03</span>준비 상태를 선택해요</span><span class="d">이력서, 자소서, 포트폴리오, 면접. 네 가지 질문에 답하면 지금 필요한 일만 골라내요.</span><span class="m-shot phone"><span class="scr" id="mPrep"><img src="s-prep1-v2.webp" alt="" loading="lazy"><img class="pf" src="s-prep2-v2.webp" alt="" loading="lazy"><img class="pf" src="s-prep3-v2.webp" alt="" loading="lazy"><img class="pf" src="s-prep4-v2.webp" alt="" loading="lazy"><img class="pf" src="s-prep5-v2.webp" alt="" loading="lazy"></span></span></button></li>
-          <li><button class="step" type="button" data-i="3"><span class="bar"></span><span class="t"><span class="no">04</span>마감까지의 로드맵 완성</span><span class="d">남은 기간을 단계별 D-day로 나눠 캘린더에 바로 등록해요.<br>아직 지원을 고민 중이면 보관함에 저장해도 돼요.</span><span class="m-shot phone"><span class="scr"><img class="tall" src="s-road-full.webp" alt="" loading="lazy"><span class="road-nav" aria-hidden="true"><img class="ngb" src="ngb.png" alt=""><span class="band"></span></span></span></span></button></li>
+          <li><button class="step" type="button" data-i="3"><span class="bar"></span><span class="t"><span class="no">04</span>마감까지의 로드맵 완성</span><span class="d">남은 기간을 단계별 D-day로 나눠 캘린더에 바로 등록해요.<br>아직 지원을 고민 중이면 보관함에 저장해도 돼요.</span><span class="m-shot phone"><span class="scr"><img class="tall" src="s-road-full-v2.webp" alt="" loading="lazy"><span class="road-nav" aria-hidden="true"><img class="rb" src="road-bottom.png" alt=""></span></span></span></button></li>
         </ol>
       </div>
       <div class="story-stage" aria-hidden="true">
@@ -529,8 +530,8 @@ html.gb-open{overflow:hidden}
           <img class="pf" src="s-prep3-v2.webp" alt="">
           <img class="pf" src="s-prep4-v2.webp" alt="">
           <img class="pf" src="s-prep5-v2.webp" alt="">
-          <img class="tall" id="roadImg" src="s-road-full.webp" alt="">
-          <span class="road-nav" id="roadNav" aria-hidden="true"><img class="ngb" src="ngb.png" alt=""><span class="band"></span></span>
+          <img class="tall" id="roadImg" src="s-road-full-v2.webp" alt="">
+          <span class="road-nav" id="roadNav" aria-hidden="true"><img class="rb" src="road-bottom.png" alt=""></span>
         </div></div>
       </div>
     </div>
@@ -561,7 +562,7 @@ html.gb-open{overflow:hidden}
         </div>
         <div class="persona-stage">
           <div class="phone"><div class="scr" id="personaScr">
-            <img src="s-road.webp" alt="안정형 AI 페이스 로드맵 화면" width="600" height="1305">
+            <img src="s-road-v2.webp" alt="안정형 AI 페이스 로드맵 화면" width="600" height="1305">
             <img class="off" src="s-road-eff.webp" alt="몰입형 AI 페이스 로드맵 화면" width="600" height="1305">
           </div></div>
           <div class="persona-piki" id="personaPiki" aria-hidden="true" style="aspect-ratio:520/622">
@@ -592,7 +593,7 @@ html.gb-open{overflow:hidden}
           <div class="tag">홈</div>
           <h3>오늘 할 일만 보면 돼요</h3>
           <p>핵심 일정의 D-day, 오늘의 할 일,<br>다음 일정까지.</p>
-          <div class="shot"><div class="phone"><div class="scr"><img src="s-home-exp.webp" alt="홈 화면: 공모전 카드가 펼쳐진 상태" loading="lazy"></div></div></div>
+          <div class="shot"><div class="phone"><div class="scr"><img src="s-home-exp-v2.webp" alt="홈 화면: 공모전 카드가 펼쳐진 상태" loading="lazy"></div></div></div>
         </article>
         <article class="bcard c-pace tilt reveal pre" style="--scroll:-12%">
           <div class="glare"></div>
@@ -645,8 +646,8 @@ html.gb-open{overflow:hidden}
       <figure><div class="phone"><div class="scr"><img src="s-scan-v3.webp" alt="" loading="lazy"></div></div><figcaption>공고 스캔<span>피키가 내용을 정리 중</span></figcaption></figure>
       <figure><div class="phone"><div class="scr"><img src="s-job.webp" alt="" loading="lazy"></div></div><figcaption>공고 확인<span>정보 수정 · 페이스 요약</span></figcaption></figure>
       <figure><div class="phone"><div class="scr"><img src="s-prep-sum-v2.webp" alt="" loading="lazy"></div></div><figcaption>준비 상태 요약<span>로드맵 생성 직전</span></figcaption></figure>
-      <figure><div class="phone"><div class="scr"><img src="s-road.webp" alt="" loading="lazy"></div></div><figcaption>AI 페이스 로드맵<span>단계별 D-day</span></figcaption></figure>
-      <figure><div class="phone"><div class="scr"><img src="s-home.webp" alt="" loading="lazy"></div></div><figcaption>홈<span>오늘의 할 일</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="s-road-v2.webp" alt="" loading="lazy"></div></div><figcaption>AI 페이스 로드맵<span>단계별 D-day</span></figcaption></figure>
+      <figure><div class="phone"><div class="scr"><img src="s-home-v2.webp" alt="" loading="lazy"></div></div><figcaption>홈<span>오늘의 할 일</span></figcaption></figure>
       <figure><div class="phone"><div class="scr"><img src="s-goal.webp" alt="" loading="lazy"></div></div><figcaption>목표 일정<span>핵심 일정 고르기</span></figcaption></figure>
       <figure><div class="phone"><div class="scr"><img src="s-cal-sheet.webp" alt="" loading="lazy"></div></div><figcaption>일정 상세<span>캘린더 바텀시트</span></figcaption></figure>
       <figure><div class="phone"><div class="scr"><img src="s-pace-eff.webp" alt="" loading="lazy"></div></div><figcaption>페이스 관리<span>몰입형으로 전환</span></figcaption></figure>
